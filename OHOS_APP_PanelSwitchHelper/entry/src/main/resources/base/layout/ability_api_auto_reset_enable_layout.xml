@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    xmlns:app="http://schemas.huawei.com/apk/res/ohos"
+    ohos:id="$+id:root_view"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical">
+
+    <DependentLayout
+        ohos:id="$+id:cus_title_bar"
+        ohos:height="match_content"
+        ohos:width="match_parent"
+        ohos:background_element="$color:colorPrimary"
+        >
+
+        <Text
+            ohos:id="$+id:title"
+            ohos:height="match_content"
+            ohos:width="match_parent"
+            ohos:bottom_padding="5vp"
+            ohos:left_padding="20vp"
+            ohos:right_padding="20vp"
+            ohos:text="自定义标题栏"
+            ohos:text_size="13fp"
+            ohos:top_padding="5vp"
+            />
+    </DependentLayout>
+
+
+    <!--主容器-->
+    <com.example.library.view.PanelSwitchLayout
+        ohos:id="$+id:panel_view"
+        ohos:height="match_parent"
+        ohos:width="match_parent"
+        ohos:orientation="vertical">
+        <!-- 显示上半部分 的View-->
+        <com.example.library.view.content.RelativeContentContainer
+            ohos:id="$+id:recc_pageview"
+            ohos:width="match_parent"
+            ohos:height="0vp"
+            ohos:weight="1"
+            ohos:orientation="vertical"
+            app:auto_reset_area="$id:empty_view"
+            app:auto_reset_enable="false"
+            app:edit_view="$id:textfield_input">
+
+            <Text
+                ohos:id="$+id:empty_view"
+                ohos:height="0vp"
+                ohos:weight="1"
+                ohos:width="match_parent"
+                ohos:background_element="$color:gray_900"
+                ohos:text="点击view内部才有效，外部无效哦～"
+                />
+            <!-- 内容区域 -->
+            <!-- edit_view 指定一个 EditText 用于输入 ，必须项-->
+            <!-- empty_view 指定用户点击该 ID 对应的 View 时实现面板或者输入法隐藏，非必须项 -->
+
+            <DirectionalLayout
+                ohos:id="$+id:input_layout"
+                ohos:height="match_content"
+                ohos:width="match_parent"
+                ohos:orientation="horizontal">
+
+                <Image
+                    ohos:id="$+id:add_btn"
+                    ohos:height="35vp"
+                    ohos:width="35vp"
+                    ohos:image_src="$media:add_btn"
+                    />
+
+                <TextField
+                    ohos:id="$+id:textfield_input"
+                    ohos:height="35vp"
+                    ohos:width="249vp"
+                    ohos:background_element="$color:btn_video_text"
+                    />
+
+                <DirectionalLayout
+                    ohos:height="40vp"
+                    ohos:width="match_parent"
+                    ohos:orientation="horizontal">
+
+                    <Image
+                        ohos:id="$+id:emotion_btn"
+                        ohos:height="35vp"
+                        ohos:width="35vp"
+                        ohos:end_margin="3vp"
+                        ohos:image_src="$media:icon_emotion"
+                        ohos:right_margin="10vp"/>
+
+                    <Text
+                        ohos:height="50vp"
+                        ohos:width="35vp"
+                        ohos:text="发送"
+                        ohos:text_alignment="center"
+                        ohos:background_element="$color:btn_activity_text"
+                        />
+
+                </DirectionalLayout>
+            </DirectionalLayout>
+
+        </com.example.library.view.content.RelativeContentContainer>
+        <!--下半部分面板-->
+        <com.example.library.view.panel.PanelContainer
+            ohos:id="$+id:panelc_container"
+            ohos:height="match_content"
+            ohos:width="match_parent"
+            ohos:background_element="$color:gray_50">
+            <!-- 每一项面板 -->
+            <!-- panel_layout 用于指定面板该 ID 对应的布局 ，必须项-->
+            <!-- panel_trigger 用于用户点击该 ID 对应的 View 时切换到该面板 -->
+            <!-- panel_toggle  用于当该面板显示时 ，用户再次点击 panel_trigger 对应的 View 时是否回切输入法-->
+
+            <com.example.library.view.panel.PanelView
+                ohos:id="$+id:panel_emotion"
+                ohos:height="200vp"
+                ohos:width="match_parent"
+                app:panel_name="emotion_btn"
+                app:panel_trigger="$id:emotion_btn"
+                ohos:background_element="#ff0000"
+                app:panel_layout="$layout:panel_emotion_layout"
+                />
+
+
+            <com.example.library.view.panel.PanelView
+                ohos:id="$+id:panel_addition"
+                ohos:height="100vp"
+                ohos:width="match_parent"
+                app:panel_name="add_btn"
+                app:panel_trigger="@id/add_btn"
+                ohos:background_element="#ffff00"
+                />
+
+        </com.example.library.view.panel.PanelContainer>
+
+    </com.example.library.view.PanelSwitchLayout>
+
+
+</DirectionalLayout>

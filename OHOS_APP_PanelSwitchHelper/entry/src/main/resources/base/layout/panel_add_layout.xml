@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:layout_alignment="center"
+    ohos:orientation="vertical">
+
+    <DirectionalLayout
+        ohos:height="match_content"
+        ohos:width="match_parent"
+        ohos:orientation="horizontal">
+
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="0vp"
+            ohos:layout_alignment="horizontal_center"
+            ohos:orientation="vertical"
+            ohos:weight="1">
+
+            <Image
+                ohos:height="60vp"
+                ohos:width="60vp"
+                ohos:image_src="$graphic:icon_add"/>
+
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:left_padding="10vp"
+                ohos:text="相册"
+                ohos:text_size="12fp"
+                />
+        </DirectionalLayout>
+
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="0vp"
+            ohos:layout_alignment="center"
+            ohos:orientation="vertical"
+            ohos:weight="1">
+
+            <Image
+                ohos:height="60vp"
+                ohos:width="60vp"
+                ohos:image_src="$graphic:icon_camera"/>
+
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:left_padding="10vp"
+                ohos:text="拍摄"
+                ohos:text_size="12fp"
+                />
+
+        </DirectionalLayout>
+
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="0vp"
+            ohos:layout_alignment="center"
+            ohos:orientation="vertical"
+            ohos:weight="1">
+
+            <Image
+                ohos:height="60vp"
+                ohos:width="60vp"
+                ohos:image_src="$graphic:icon_video"/>
+
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:left_padding="10vp"
+                ohos:text="视频通讯"
+                ohos:text_size="12fp"
+                />
+
+        </DirectionalLayout>
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="0vp"
+            ohos:weight="1"
+            ohos:layout_alignment="center"
+            ohos:orientation="vertical">
+            <Image
+                ohos:height="60vp"
+                ohos:width="60vp"
+                ohos:image_src="$graphic:icon_location"/>
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="位置"
+                ohos:text_size="12fp"
+                ohos:left_padding="10vp"
+                />
+
+        </DirectionalLayout>
+
+
+    </DirectionalLayout>
+
+    <DirectionalLayout
+        ohos:height="match_content"
+        ohos:width="match_parent"
+        ohos:orientation="horizontal"
+        ohos:top_margin="30vp">
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="0vp"
+            ohos:weight="1"
+            ohos:layout_alignment="center"
+            ohos:orientation="vertical">
+            <Image
+                ohos:height="60vp"
+                ohos:width="60vp"
+                ohos:image_src="$graphic:icon_voice"/>
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="语音输入"
+                ohos:text_size="12fp"
+                ohos:left_padding="10vp"
+                />
+
+        </DirectionalLayout>
+
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="0vp"
+            ohos:weight="1"
+            ohos:layout_alignment="center"
+            ohos:orientation="vertical">
+            <Image
+                ohos:height="60vp"
+                ohos:width="60vp"
+                ohos:image_src="$graphic:icon_account"/>
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="名片"
+                ohos:text_size="12fp"
+                ohos:left_padding="10vp"
+                />
+
+        </DirectionalLayout>
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="0vp"
+            ohos:weight="1"
+            ohos:layout_alignment="center"
+            ohos:orientation="vertical">
+            <Image
+                ohos:height="60vp"
+                ohos:width="60vp"
+                ohos:image_src="$graphic:icon_account"
+                ohos:visibility="invisible"
+                />
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="名片"
+                ohos:text_size="12fp"
+                ohos:left_padding="10vp"
+                ohos:visibility="invisible"
+                />
+
+        </DirectionalLayout>
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="0vp"
+            ohos:weight="1"
+            ohos:layout_alignment="center"
+            ohos:orientation="vertical">
+            <Image
+                ohos:height="60vp"
+                ohos:width="60vp"
+                ohos:visibility="invisible"
+                ohos:image_src="$graphic:icon_account"/>
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="名片"
+                ohos:visibility="invisible"
+                ohos:text_size="12fp"
+                ohos:left_padding="10vp"
+                />
+
+        </DirectionalLayout>
+
+
+    </DirectionalLayout>
+
+</DirectionalLayout>

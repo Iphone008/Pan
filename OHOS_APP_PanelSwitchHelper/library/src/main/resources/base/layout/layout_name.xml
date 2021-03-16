@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical"
+    ohos:background_element="#ff0000"
+    >
+    <Text
+        ohos:height="170vp"
+        ohos:width="match_parent"
+        ohos:text="冲冲冲！"
+        ohos:text_size="15fp"
+        />
+
+</DirectionalLayout>

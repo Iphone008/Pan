@@ -1,0 +1,27 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "MyDome"
+    },
+    {
+      "name": "mainability_description",
+      "value": "Java_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "HelloWorld",
+      "value": "Hello World"
+    },{
+      "name": "homeability_description",
+      "value": "Java_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "transitability_description",
+      "value": "Java_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "chatability_description",
+      "value": "Java_Phone_Empty Feature Ability"
+    }
+  ]
+}

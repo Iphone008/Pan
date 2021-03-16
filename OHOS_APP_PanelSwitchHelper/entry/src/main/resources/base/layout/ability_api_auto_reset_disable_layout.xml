@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    xmlns:app="http://schemas.huawei.com/apk/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical">
+
+    <DependentLayout
+        ohos:id="$+id:cus_title_bar"
+        ohos:height="match_content"
+        ohos:width="match_parent"
+        ohos:background_element="$color:colorPrimary">
+
+        <Text
+            ohos:id="$+id:title"
+            ohos:height="match_content"
+            ohos:width="match_parent"
+            ohos:bottom_padding="5vp"
+            ohos:left_padding="20vp"
+            ohos:right_padding="20vp"
+            ohos:text="自定义标题栏"
+            ohos:text_size="13fp"
+            ohos:top_padding="5vp"
+            />
+    </DependentLayout>
+    <DependentLayout
+        ohos:height="match_content"
+        ohos:width="match_parent">
+        <Button
+            ohos:height="match_content"
+            ohos:width="match_parent"
+            ohos:id="$+id:bt_show_cmp"
+            ohos:text_size="15fp"
+            ohos:text="显示容器"
+            ohos:padding="10vp"
+            ohos:background_element="$color:colorAccent"
+            />
+        <Button
+            ohos:height="match_content"
+            ohos:width="match_parent"
+            ohos:id="$+id:bt_close_cmp"
+            ohos:text_size="15fp"
+            ohos:text="关闭容器"
+            ohos:padding="10vp"
+            ohos:background_element="$color:gray_400"
+            ohos:below="$id:bt_show_cmp"
+            />
+    </DependentLayout>
+
+
+    <!--<com.example.library.PanelSwitchLayout-->
+    <com.example.library.view.PanelSwitchLayout
+        ohos:id="$+id:panel_switch_layout"
+        ohos:height="match_parent"
+        ohos:width="match_parent"
+        ohos:orientation="vertical">
+
+        <com.example.library.view.content.RelativeContentContainer
+            ohos:id="$+id:content_view"
+            ohos:height="match_parent"
+            ohos:width="match_parent"
+            app:auto_reset_enable="false"
+            app:edit_view="$id/edit_text">
+
+            <ListContainer
+                ohos:id="$+id:list_cmp"
+                ohos:height="match_parent"
+                ohos:width="match_content"
+                ohos:visibility="hide"
+                />
+            <DirectionalLayout
+                ohos:id="$+id:bottom_action"
+                ohos:height="match_content"
+                ohos:width="match_parent"/>
+
+
+        </com.example.library.view.content.RelativeContentContainer>
+
+
+
+        <!-- 面板区域，仅能包含PanelView-->
+        <com.example.library.view.panel.PanelContainer
+            ohos:height="match_parent"
+            ohos:width="match_parent">
+            <!-- 每一项面板 -->
+            <!-- panel_layout 用于指定面板该 ID 对应的布局 ，必须项-->
+            <!-- panel_trigger 用于用户点击该 ID 对应的 View 时切换到该面板 -->
+            <!-- panel_toggle  用于当该面板显示时 ，用户再次点击 panel_trigger 对应的 View 时是否回切输入法-->
+            <com.example.library.view.panel.PanelView
+                ohos:id="$+id:panel_emotion"
+                ohos:height="match_parent"
+                ohos:width="match_parent"/>
+            <com.example.library.view.panel.PanelView
+                ohos:id="$+id:panel_addition"
+                ohos:height="match_parent"
+                ohos:width="match_parent"/>
+
+        </com.example.library.view.panel.PanelContainer>
+
+    </com.example.library.view.PanelSwitchLayout>
+
+
+</DirectionalLayout>
