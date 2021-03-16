@@ -68,11 +68,12 @@ public class PanelView extends StackLayout implements IPanelComponent {
 
     @Override
     public boolean isShowing() {
-        /////---------------------------------
         if (isShowState){
+            isShowState=false;
+        }else {
             isShowState=true;
         }
-        return isComponentDisplayed();
+        return isShowState;
     }
 
     //子类绘制
