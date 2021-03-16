@@ -1,27 +1,22 @@
 package com.example.mydome.slice;
 
 import com.example.library.PanelSwitchHelper;
-import com.example.library.interfaces.ContentScrollMeasurerBuilder;
 import com.example.library.interfaces.IContentScroll.ContentScrollMeasurer;
 import com.example.library.interfaces.listener.IListener.IOnKeyboardChange;
 import com.example.library.interfaces.listener.IListener.OnKeyboardStateListener;
 import com.example.library.interfaces.listener.IListener.OnPanelChangeListener;
 import com.example.library.interfaces.listener.OnKeyboardStateListenerBuilder;
-import com.example.library.interfaces.listener.OnPanelChangeListenerBuilder;
 import com.example.library.view.PanelSwitchLayout;
 import com.example.library.view.content.RelativeContentContainer;
 import com.example.library.view.panel.IPanelComponent;
-import com.example.library.view.panel.IPanelView;
 import com.example.library.view.panel.PanelContainer;
 import com.example.library.view.panel.PanelView;
 import com.example.mydome.ResourceTable;
 import ohos.aafwk.ability.Ability;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
-import ohos.agp.components.ComponentContainer;
 import ohos.agp.components.Image;
 import ohos.agp.window.service.Window;
-import ohos.agp.window.service.WindowManager;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 
