@@ -34,6 +34,8 @@
 //    PanelSwitchLayout mPanelSwitchLayout;
 //    Image emotion_btn, addbt;
 //    PanelView panel_addition,panel_emotion;
+//
+//
 //    List<Component> PanelLayoutId=new ArrayList<>();
 //
 //
@@ -80,7 +82,7 @@
 //                            new OnKeyboardStateListener() {
 //                                @Override
 //                                public void onKeyboardChange(boolean visible, int height) {
-//                                HiLog.info(LABEL,"添加  addKeyboardStateListener   ");
+//                                    HiLog.info(LABEL,"添加  addKeyboardStateListener   ");
 //                                }
 //                            }
 //                    )
@@ -163,10 +165,15 @@
 //
 //    @Override
 //    protected void onBackPressed() {
-//        if (mHelper != null && mHelper.hookSystemBackByPanelSwitcher()) {
-//            mHelper.hookSystemBackByPanelSwitcher();
-//            return;
+//
+//        if (mHelper != null) {
+//            HiLog.info(LABEL,"隐藏按钮  ----> ");
+//            boolean isok=mPanelSwitchLayout.HidePanelView();
+//            if(isok){
+//                return;
+//            }else {
+//                super.onBackPressed();
+//            }
 //        }
-//        super.onBackPressed();
 //    }
 //}

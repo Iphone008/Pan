@@ -1,8 +1,12 @@
 package com.example.mydome.slice;
 
+import com.example.mydome.Constants;
+import com.example.mydome.ContentAbility;
 import com.example.mydome.ResourceTable;
+import com.example.mydome.anno.ApiContentType;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
+import ohos.aafwk.content.Operation;
 import ohos.agp.components.*;
 
 import java.util.ArrayList;
@@ -92,70 +96,70 @@ public class TransitAbilitySlice extends AbilitySlice {
         list.setItemClickedListener(new ListContainer.ItemClickedListener() {
             @Override
             public void onItemClicked(ListContainer listContainer, Component component, int i, long l) {
-                switch (childStrings.get(i)){
-                    case activity_1:{
+                switch (childStrings.get(i)) {
+                    case activity_1: {
 //                        ChatActivity.start(MainActivity.this, ChatPageType.DEFAULT);
                         break;
                     }
-                    case activity_2:{
+                    case activity_2: {
 //                        ChatActivity.start(MainActivity.this, ChatPageType.TITLE_BAR);
                         break;
                     }
-                    case activity_3:{
+                    case activity_3: {
 //                        ChatActivity.start(MainActivity.this, ChatPageType.CUS_TITLE_BAR);
                         break;
                     }
-                    case activity_4:{
+                    case activity_4: {
 //                        ChatActivity.start(MainActivity.this, ChatPageType.COLOR_STATUS_BAR);
                         break;
                     }
-                    case activity_5:{
+                    case activity_5: {
 //                        ChatActivity.start(MainActivity.this, ChatPageType.TRANSPARENT_STATUS_BAR);
                         break;
                     }
-                    case activity_6:{
+                    case activity_6: {
 //                        ChatActivity.start(MainActivity.this, ChatPageType.TRANSPARENT_STATUS_BAR_DRAW_UNDER);
                         break;
                     }
 
-                    case fragment_1:{
+                    case fragment_1: {
 //                        ChatFragmentActivity.startFragment(MainActivity.this, ChatPageType.DEFAULT);
                         break;
                     }
-                    case fragment_2:{
+                    case fragment_2: {
 //                        ChatFragmentActivity.startFragment(MainActivity.this, ChatPageType.TITLE_BAR);
                         break;
                     }
-                    case fragment_3:{
+                    case fragment_3: {
 //                        ChatFragmentActivity.startFragment(MainActivity.this, ChatPageType.COLOR_STATUS_BAR);
                         break;
                     }
-                    case fragment_4:{
+                    case fragment_4: {
 //                        ChatFragmentActivity.startFragment(MainActivity.this, ChatPageType.TRANSPARENT_STATUS_BAR);
                         break;
                     }
 
-                    case window_1:{
+                    case window_1: {
 //                        DialogFragment dialogFragment = new ChatDialogFragment();
 //                        dialogFragment.showNow(getSupportFragmentManager(), "dialogFragment");
                         break;
                     }
-                    case window_2:{
+                    case window_2: {
 //                        PopupWindow popupWindow = new ChatPopupWindow(MainActivity.this);
 //                        popupWindow.showAtLocation(mBinding.getRoot(), Gravity.NO_GRAVITY, 0, 0);
                         break;
                     }
-                    case window_3:{
+                    case window_3: {
 //                        Dialog dialog = new ChatDialog(MainActivity.this);
 //                        dialog.show();
                         break;
                     }
 
-                    case scene_1:{
+                    case scene_1: {
 //                        startActivity(new Intent(MainActivity.this, BiliBiliSampleActivity.class));
                         break;
                     }
-                    case scene_2:{
+                    case scene_2: {
 //                        startActivity(new Intent(MainActivity.this, FeedDialogActivity.class));
                         break;
                     }
@@ -163,68 +167,99 @@ public class TransitAbilitySlice extends AbilitySlice {
 //                        startActivity(new Intent(MainActivity.this, FeedActivity.class));
 //                        break;
 //                    }
-                    case scene_3:{
+                    case scene_3: {
 //                        startActivity(new Intent(MainActivity.this, PcHuyaLiveActivity.class));
                         break;
                     }
-                    case scene_4:{
+                    case scene_4: {
 //                        startActivity(new Intent(MainActivity.this, PhoneDouyinLiveActivity.class));
                         break;
                     }
-                    case scene_5:{
+                    case scene_5: {
 //                        startActivity(new Intent(MainActivity.this, ChatSuperActivity.class));
                         break;
                     }
 
-                    case api_cus_panel:{
+                    case api_cus_panel: {
 //                        startActivity(new Intent(MainActivity.this, CusPanelActivity.class));
                         break;
                     }
 
-                    case api_cus_panel_height:{
+                    case api_cus_panel_height: {
 //                        startActivity(new Intent(MainActivity.this, DefaultHeightPanelActivity.class));
                         break;
                     }
 
-                    case api_define_content_container_scroll:{
+                    case api_define_content_container_scroll: {
 //                        ChatCusContentScrollActivity.start(MainActivity.this);
                         break;
                     }
-                    case api_content_container_1:{
-                        //需要类型
-//                        ContentActivity.start(MainActivity.this, ApiContentType.Linear);
+                    case api_content_container_1: {
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Linear);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(ContentAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
-                    case api_content_container_2:{
-//                        ContentActivity.start(MainActivity.this, ApiContentType.Relative);
+                    case api_content_container_2: {
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Relative);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(ContentAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
-                    case api_content_container_3:{
-//                        ContentActivity.start(MainActivity.this, ApiContentType.Frame);
+                    case api_content_container_3: {
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Frame);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(ContentAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
-                    case api_content_container_4:{
-//                        ContentActivity.start(MainActivity.this, ApiContentType.CUS);
+                    case api_content_container_4: {
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.CUS);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(ContentAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
 
-                    case api_reset_1:{
+                    case api_reset_1: {
 //                        ResetActivity.start(MainActivity.this, ApiResetType.ENABLE);
                         break;
                     }
-                    case api_reset_2:{
+                    case api_reset_2: {
 //                        ResetActivity.start(MainActivity.this, ApiResetType.ENABLE_EmptyView);
                         break;
                     }
-                    case api_reset_3:{
+                    case api_reset_3: {
 //                        ResetActivity.start(MainActivity.this, ApiResetType.ENABLE_RecyclerView);
                         break;
                     }
-                    case api_reset_4:{
+                    case api_reset_4: {
 //                        ResetActivity.start(MainActivity.this, ApiResetType.ENABLE_HookActionUpRecyclerview);
                         break;
                     }
-                    case api_reset_5:{
+                    case api_reset_5: {
 //                        ResetActivity.start(MainActivity.this, ApiResetType.DISABLE);
                         break;
                     }

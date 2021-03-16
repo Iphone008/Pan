@@ -11,7 +11,8 @@
     {
       "name": "HelloWorld",
       "value": "Hello World"
-    },{
+    },
+    {
       "name": "homeability_description",
       "value": "Java_Phone_Empty Feature Ability"
     },
@@ -22,6 +23,14 @@
     {
       "name": "chatability_description",
       "value": "Java_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "contentability_description",
+      "value": "Java_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "HelloWorld",
+      "value": "Hello World"
     }
   ]
 }

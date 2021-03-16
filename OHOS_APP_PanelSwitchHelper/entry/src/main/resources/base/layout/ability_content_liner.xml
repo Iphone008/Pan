@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    xmlns:app="http://schemas.huawei.com/apk/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical">
+
+    <Text
+        ohos:id="$+id:titleText"
+        ohos:height="50vp"
+        ohos:width="match_parent"
+        ohos:background_element="$color:colorPrimary"
+        ohos:left_padding="20vp"
+        ohos:text="$string:HelloWorld"
+        ohos:text_color="$color:btn_bg"
+        ohos:text_size="20fp"/>
+
+    <com.example.library.view.PanelSwitchLayout
+        ohos:id="$+id:panel_switch_layout"
+        ohos:height="match_parent"
+        ohos:width="match_parent"
+        ohos:orientation="vertical">
+        <!-- 内容区域 -->
+        <!-- edit_view 指定一个 EditText 用于输入 ，必须项-->
+        <!-- empty_view 指定用户点击该 ID 对应的 View 时实现面板或者输入法隐藏，非必须项 -->
+        <com.example.library.view.content.DirectionalContentContainer
+            ohos:id="$+id:content_view"
+            ohos:height="match_parent"
+            ohos:width="match_parent"
+            ohos:orientation="vertical"
+            app:edit_view="$id:edit_text"
+            app:auto_reset_area="$id:edit_text"
+            app:auto_reset_enable="true"
+            >
+
+            <Component
+                ohos:id="$+id:recycler_view"
+                ohos:height="match_parent"
+                ohos:width="match_parent"
+                ohos:bottom_margin="50vp"
+                ohos:background_element="$color:btn_reset_text"/>
+
+            <DirectionalLayout
+                ohos:height="50vp"
+                ohos:width="match_parent"
+                ohos:layout_alignment="bottom"
+                ohos:bottom_padding="8vp"
+                ohos:alignment="bottom"
+                ohos:left_padding="10vp"
+                ohos:min_height="50vp"
+                ohos:orientation="horizontal"
+                ohos:right_padding="10vp">
+
+                <Image
+                    ohos:id="$+id:add_btn"
+                    ohos:height="35vp"
+                    ohos:width="35vp"
+                    ohos:image_src="$media:add_btn"/>
+
+                <TextField
+                    ohos:id="$+id:edit_text"
+                    ohos:height="match_content"
+                    ohos:width="0vp"
+                    ohos:weight="1"/>
+            </DirectionalLayout>
+
+        </com.example.library.view.content.DirectionalContentContainer>
+    </com.example.library.view.PanelSwitchLayout>
+</DirectionalLayout>

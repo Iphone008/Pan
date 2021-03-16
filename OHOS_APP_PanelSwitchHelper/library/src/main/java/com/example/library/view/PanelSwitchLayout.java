@@ -238,9 +238,10 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
          * save panel that you want to use these to checkout
          */
         mPanelSparseArray = panelContainer.panelComponentMap;
+        HiLog.info(LABEL,"当前 mPanelSparseArray "+mPanelSparseArray.size());
         for (IPanelComponent iPanelComponent:mPanelSparseArray.values()){
             Component keyView=contentContainer.findTriggerView(iPanelComponent.getBindingTriggerViewId());
-
+            HiLog.info(LABEL,"当前 keyView : "+(keyView==null));
             keyView.setClickedListener(new ClickedListener() {
                 boolean Keyboard=true;
                 @Override
