@@ -51,15 +51,11 @@ public class StackContentContainer extends StackLayout implements IContentContai
         };
     }
 
-
-    //没有该方法   但是该方法用来写入数据的 变量
-//    @Override
-//    protected void onFinishInflate() {
-//        super.onFinishInflate();
-//        contentContainer = new ContentContainerImpl(this,autoResetByOnTouch, editTextId, autoResetId);
-//        TextField editText = getInputActionImpl().getFullScreenPixelInputView();
-//        addView(editText, 0, new LayoutParams(1, 1));
-//    }
+    public void onFinishFlate(){
+        contentContainer = new ContentContainerImpl(this,autoResetByOnTouch, editTextId, autoResetId);
+        TextField editText = getInputActionImpl().getFullScreenPixelInputView();
+        addComponent(editText,0,new LayoutConfig(1,1));
+    }
 
 
     @Override

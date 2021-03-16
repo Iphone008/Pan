@@ -146,7 +146,6 @@ public class PanelSwitchHelper {
      * 外部显示面板 performClick
      */
     public void toPanelState(int triggerViewId) {
-
         mPanelSwitchLayout.findComponentById(triggerViewId).simulateClick();
     }
 

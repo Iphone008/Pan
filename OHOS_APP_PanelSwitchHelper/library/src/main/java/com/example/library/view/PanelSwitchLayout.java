@@ -13,8 +13,10 @@ import com.example.library.interfaces.listener.IListener.OnPanelChangeListener;
 import com.example.library.interfaces.listener.IListener.OnTextFieldChangeListener;
 import com.example.library.utils.DisplayUtil;
 import com.example.library.utils.PanelUtil;
+import com.example.library.view.content.DirectionalContentContainer;
 import com.example.library.view.content.IContentContainer;
 import com.example.library.view.content.RelativeContentContainer;
+import com.example.library.view.content.StackContentContainer;
 import com.example.library.view.panel.IPanelComponent;
 import com.example.library.view.panel.PanelContainer;
 import com.example.library.view.panel.PanelView;
@@ -125,9 +127,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
         if (hasAttachLister){
             hasAttachLister=true;
         }
-        RelativeContentContainer relativeContentContainer =(RelativeContentContainer)getComponentAt(0);
-
-        relativeContentContainer.onFinishFlate();
+        getLayoutType();
         initListener();
     }
 
@@ -242,7 +242,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
             Component keyView=contentContainer.findTriggerView(iPanelComponent.getBindingTriggerViewId());
 
             keyView.setClickedListener(new ClickedListener() {
-                boolean onclickState=true;
+                boolean Keyboard=true;
                 @Override
                 public void onClick(Component component) {
                     HiLog.info(LABEL,"当前点击的事件是  ： "+component.getId());
@@ -254,17 +254,18 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
                     notifyViewClick(component);
 
                     int targetId = panelContainer.getPanelId(iPanelComponent);
-                    HiLog.info(LABEL,"进入方法  点击时间的判断条件panelId : "+panelId+", targetId:"+targetId);
-                    HiLog.info(LABEL,"进入方法  点击时间的判断条件 iPanelComponent.isTriggerViewCanToggle(): "+iPanelComponent.isTriggerViewCanToggle());
-                    HiLog.info(LABEL,"进入方法  点击时间的判断条件iPanelComponent.isShowing() : "+iPanelComponent.isShowing());
-                    if (panelId == targetId && iPanelComponent.isTriggerViewCanToggle() && iPanelComponent.isShowing()) {
-
-//                        checkPanelStatus(onclickState);
-//                        onclickState=false;
-                        HiLog.info(LABEL,"进入方法 ---------checkoutKeyboard（）----");
-                        checkoutKeyboard(false);
+                    HiLog.info(LABEL,"iPanelComponent.isShowing() "+iPanelComponent.isShowing());
+                    if (panelId == targetId&&iPanelComponent.isShowing()) {
+                        if (Keyboard){
+                            HiLog.info(LABEL,"点击事件： ID相同，弹出键盘 "+Keyboard);
+                            DisplayUtil.getInstance().showSoftInput();
+                            Keyboard=false;
+                        }else {
+                            HiLog.info(LABEL,"点击事件： ID相同，隐藏键盘 "+Keyboard);
+                            DisplayUtil.getInstance().hideSoftInput();
+                            Keyboard=true;
+                        }
                     } else {
-                        HiLog.info(LABEL,"进入方法 ---------checkoutPanel（）----");
                         checkoutPanel(targetId);
                     }
                     preClickTime=currentTime;
@@ -278,6 +279,24 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
    private void HidePanelStatus(int PanelId){
        ((PanelView)mPanelSparseArray.get(PanelId)).setVisibility(Component.HIDE);
    }
+
+    //尝试使用强制转换当前的第一个Component的类型
+    private void  getLayoutType(){
+        boolean getComponentStyle=false;
+        Component component = getComponentAt(0);
+        if (component instanceof RelativeContentContainer){
+            RelativeContentContainer relativeContentContainer=(RelativeContentContainer)component;
+            relativeContentContainer.onFinishFlate();
+        }else if(component instanceof StackContentContainer){
+            StackContentContainer stackContentContainer=(StackContentContainer)component;
+            stackContentContainer.onFinishFlate();
+        }else if (component instanceof DirectionalContentContainer){
+            DirectionalContentContainer directionalContentContainer=(DirectionalContentContainer)component;
+            directionalContentContainer.onFinishInflate();
+        }
+
+
+    }
 
 
 
