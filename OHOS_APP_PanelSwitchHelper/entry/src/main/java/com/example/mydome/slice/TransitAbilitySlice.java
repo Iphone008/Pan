@@ -1,9 +1,8 @@
 package com.example.mydome.slice;
 
-import com.example.mydome.Constants;
-import com.example.mydome.ContentAbility;
-import com.example.mydome.ResourceTable;
+import com.example.mydome.*;
 import com.example.mydome.anno.ApiContentType;
+import com.example.mydome.anno.ApiResetType;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.aafwk.content.Operation;
@@ -181,17 +180,41 @@ public class TransitAbilitySlice extends AbilitySlice {
                     }
 
                     case api_cus_panel: {
-//                        startActivity(new Intent(MainActivity.this, CusPanelActivity.class));
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Linear);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(CusPanelAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
 
                     case api_cus_panel_height: {
-//                        startActivity(new Intent(MainActivity.this, DefaultHeightPanelActivity.class));
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Linear);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(DefaultHeightPanelAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
 
                     case api_define_content_container_scroll: {
-//                        ChatCusContentScrollActivity.start(MainActivity.this);
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Linear);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(ChatCusContentScrollAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
                     case api_content_container_1: {
@@ -244,23 +267,63 @@ public class TransitAbilitySlice extends AbilitySlice {
                     }
 
                     case api_reset_1: {
-//                        ResetActivity.start(MainActivity.this, ApiResetType.ENABLE);
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiResetType.ENABLE);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(ResetAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
                     case api_reset_2: {
-//                        ResetActivity.start(MainActivity.this, ApiResetType.ENABLE_EmptyView);
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiResetType.ENABLE_EmptyView);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(ResetAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
                     case api_reset_3: {
-//                        ResetActivity.start(MainActivity.this, ApiResetType.ENABLE_RecyclerView);
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiResetType.ENABLE_RecyclerView);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(ResetAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
                     case api_reset_4: {
-//                        ResetActivity.start(MainActivity.this, ApiResetType.ENABLE_HookActionUpRecyclerview);
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiResetType.ENABLE_HookActionUpRecyclerview);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(ResetAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
                     case api_reset_5: {
-//                        ResetActivity.start(MainActivity.this, ApiResetType.DISABLE);
+                        Intent intent = new Intent();
+                        intent.setParam(Constants.KEY_CONTENT_TYPE, ApiResetType.DISABLE);
+                        Operation operation = new Intent.OperationBuilder()
+                                .withDeviceId("")
+                                .withBundleName(getBundleName())
+                                .withAbilityName(ResetAbility.class.getName())
+                                .build();
+                        intent.setOperation(operation);
+                        startAbility(intent);
                         break;
                     }
                 }

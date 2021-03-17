@@ -1,0 +1,33 @@
+{
+    "app" : 
+    {
+        "apiVersion" : 
+        {
+            "compatible" : 4,
+            "releaseType" : "Beta2",
+            "target" : 4
+        },
+        "bundleName" : "com.example.mydome",
+        "vendor" : "example",
+        "version" : 
+        {
+            "code" : 1,
+            "name" : "1.0"
+        }
+    },
+    "deviceConfig" : {},
+    "module" : 
+    {
+        "deviceType" : 
+        [
+            "phone"
+        ],
+        "distro" : 
+        {
+            "deliveryWithInstall" : true,
+            "moduleName" : "library",
+            "moduleType" : "har"
+        },
+        "package" : "com.example.library"
+    }
+}

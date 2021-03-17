@@ -99,6 +99,10 @@
     {
       "name": "video_input_text_hint",
       "value": "#5FFFFFFF"
+    },
+    {
+      "name": "blue_bright",
+      "value": "#ff00ddff"
     }
   ]
 }

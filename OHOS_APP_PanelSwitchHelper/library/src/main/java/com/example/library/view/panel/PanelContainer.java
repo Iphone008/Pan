@@ -77,32 +77,25 @@ public class PanelContainer extends DirectionalLayout implements ComponentAssert
 
     //显示
     public Pair<Integer, Integer> showPanel(int panelId, Pair<Integer, Integer> size) {
-        HiLog.info(LABEL, "showPanel:  is run ");
-        HiLog.info(LABEL, "showPanel:  size  "+size.toString());
+        System.out.println( "showPanel:  is run ");
+        System.out.println("showPanel:  size  "+size.toString());
         IPanelComponent panel = (IPanelComponent) panelComponentMap.get(panelId);
-        HiLog.info(LABEL, "showPanel:  panel  ===> "+(panel==null));
+        System.out.println("showPanel:  panel  ===> "+(panel==null));
 
-        //---------
         for (IPanelComponent panelItem : panelComponentMap.values()) {
-            HiLog.info(LABEL,"显示面板方法 "+(panelItem != panel) );
+
+
+            System.out.println("显示面板方法 "+(panelItem != panel) );
+
+
             if (panelItem instanceof Component) {
-                HiLog.info(LABEL,"显示面板  =====》 "+(panelItem != panel));
+                System.out.println("显示面板  =====》 "+(panelItem != panel));
                 ((Component) panelItem).setVisibility(panelItem != panel ? Component.HIDE : Component.VISIBLE);
+
             }
         }
-
         layoutParams = (LayoutConfig) ((Component) panel).getLayoutConfig();
-//        HiLog.info(LABEL,"showPanel height -->"+layoutParams.height);
-//        HiLog.info(LABEL,"showPanel weight -->"+layoutParams.weight);
         Pair curSize = new Pair(layoutParams.width, layoutParams.height);
-//        HiLog.info(LABEL,"------------------------------");
-//        HiLog.info(LABEL,"showPanel height -->"+layoutParams.width);
-//        HiLog.info(LABEL,"showPanel height -->"+size.f);
-//        HiLog.info(LABEL,"------------------------------");
-//        HiLog.info(LABEL,"------------------------------");
-//        HiLog.info(LABEL,"showPanel height -->"+curSize.s);
-//        HiLog.info(LABEL,"showPanel height -->"+size.s);
-//        HiLog.info(LABEL,"------------------------------");
         if (curSize.f != size.f || curSize.s != size.s) {
             layoutParams.width = size.f;
             layoutParams.height = size.s;
@@ -130,6 +123,19 @@ public class PanelContainer extends DirectionalLayout implements ComponentAssert
     public  void  setPanelLayoutId(List<Component> layoutComponent){
         this.paenllayoutComponent=layoutComponent;
         onFinishFlate();
+    }
+    public  boolean HidePanelView(){
+        try {
+            for (IPanelComponent iPanelComponent:panelComponentMap.values()){
+                ((Component)(iPanelComponent)).setVisibility(Component.HIDE);
+            }
+            postLayout();//刷新布局
+            return  true;
+        }catch (Exception e){
+            HiLog.error(LABEL,"The current component is not a subclass of ipanelcomponent");
+            return false;
+        }
+
     }
 
 }

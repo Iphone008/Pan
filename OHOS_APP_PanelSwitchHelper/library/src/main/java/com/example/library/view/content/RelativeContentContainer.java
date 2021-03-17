@@ -3,6 +3,7 @@ package com.example.library.view.content;
 
 import com.example.library.interfaces.IContentScroll.ContentScrollMeasurer;
 import ohos.agp.components.*;
+import ohos.agp.text.Layout;
 import ohos.app.Context;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
@@ -53,6 +54,8 @@ public class RelativeContentContainer extends DependentLayout implements IConten
     public void onFinishFlate() {
         HiLog.info(LABEL, "onFinishFlate is run end ");
         contentContainer = new ContentContainerImpl(this, autoResetByOnTouch, editTextid, autoResetid);
+//        TextField editText = getInputActionImpl().getFullScreenPixelInputView();
+//        addComponent(editText,0,new LayoutConfig(1,1));
     }
 
 

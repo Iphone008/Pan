@@ -31,7 +31,7 @@ import java.util.WeakHashMap;
  */
 
 public class ContentContainerImpl implements ComponentAssertion, IContentContainer {
-    static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0xD001400, "MY_TAG_ContentContainerImpl");
+    static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0xD011400, "MY_TAG_ContentContainerImpl");
     private TextField mTextField;
     private Context context;
     private Component mResetComponent;
@@ -48,6 +48,7 @@ public class ContentContainerImpl implements ComponentAssertion, IContentContain
 
     public ContentContainerImpl(ComponentContainer viewGroup, Boolean mAutoReset, int mEditTextId, int mRresetId) {
         DirectionalLayout directionalLayout = (DirectionalLayout) viewGroup.getComponentAt(1);
+
         mTextField = (TextField) directionalLayout.findComponentById(mEditTextId);
         context = viewGroup.getContext();
 
@@ -180,6 +181,7 @@ public class ContentContainerImpl implements ComponentAssertion, IContentContain
 
                 @Override
                 public void run() {
+
                     mainInputView.requestFocus();
                     if (resetSelection) {
                         new EventHandler(EventRunner.getMainEventRunner()).postTask(new Runnable() {
@@ -245,7 +247,8 @@ public class ContentContainerImpl implements ComponentAssertion, IContentContain
                 HiLog.info(LABEL, "run this fun");
                 onClickListener = l;
 //                boolean isnull = mainInputView == null ? true : false;
-                HiLog.info(LABEL, "显示的" + (mainInputView == null));
+//                HiLog.info(LABEL, "显示的" + (mainInputView == null));
+
                 mainInputView.setClickedListener(new Component.ClickedListener() {
                     @Override
                     public void onClick(Component component) {

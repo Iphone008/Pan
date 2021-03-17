@@ -79,8 +79,8 @@ public class PanelView extends StackLayout implements IPanelComponent {
     //子类绘制
     @Override
     public void assertComponent() throws Exception {
-        HiLog.info(LABEL,"------>PanelView  assertComponent is run ");
-        HiLog.info(LABEL,"------>PanelView  assertComponent triggerViewId  : "+triggerViewId);
+        System.out.println("------>PanelView  assertComponent is run ");
+        System.out.println("------>PanelView  assertComponent triggerViewId  : "+triggerViewId);
         if (triggerViewId == -1) {
             throw new RuntimeException("PanelView -- you must set 'panel_layout' and panel_trigger by Integer id");
         }
@@ -93,6 +93,7 @@ public class PanelView extends StackLayout implements IPanelComponent {
         } else {
             throw new RuntimeException("PanelView -- should be a view!");
         }
+        System.out.println("------>PanelView  run  end ");
             addComponent(LayoutComponent);
     }
 

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    xmlns:app="http://schemas.huawei.com/apk/res/ohos"
+    ohos:id="$+id:root_view"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical">
+
+    <com.example.library.view.PanelSwitchLayout
+        ohos:id="$+id:panel_switch_layout"
+        ohos:height="match_parent"
+        ohos:width="match_parent"
+        ohos:orientation="vertical">
+        <!-- 内容区域 -->
+        <!-- edit_view 指定一个 EditText 用于输入 ，必须项-->
+        <!-- empty_view 指定用户点击该 ID 对应的 View 时实现面板或者输入法隐藏，非必须项 -->
+        <com.example.library.view.content.RelativeContentContainer
+            ohos:id="$+id:content_view"
+            ohos:height="match_parent"
+            ohos:width="match_parent"
+            ohos:orientation="vertical"
+            app:auto_reset_area="$id:recycler_view"
+            app:auto_reset_enable="false"
+            app:edit_view="$id:textfield_input">
+
+            <com.example.mydome.scene.chat.AutoHidePanelListContainer
+                ohos:id="$+id:recycler_view"
+                ohos:height="match_parent"
+                ohos:width="match_parent"
+                ohos:bottom_margin="50vp"
+                ohos:visibility="visible"/>
+
+            <Text
+                ohos:id="$+id:tip_view_top"
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:align_parent_right="true"
+                ohos:background_element="$color:blue_bright"
+                ohos:padding="10vp"
+                ohos:text="干预滑动，偏顶部布局滑动时不被其滑走"
+                ohos:text_color="#FFFFFF"
+                ohos:text_size="15fp"
+                ohos:top_margin="100vp"
+                ohos:visibility="visible"/>
+
+            <Text
+                ohos:id="$+id:tip_view"
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:background_element="$color:blue_bright"
+                ohos:padding="10vp"
+                ohos:right_margin="100vp"
+                ohos:text="不做干预，默认 ContentContainer 内的布局会随面板展开而滑动"
+                ohos:text_color="#FFFFFF"
+                ohos:text_size="15fp"
+                ohos:top_margin="200vp"
+                ohos:visibility="visible"/>
+
+            <Text
+                ohos:id="$+id:tip_view_bottom"
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:above="$id:bottom_action"
+                ohos:align_parent_right="true"
+                ohos:background_element="$color:blue_bright"
+                ohos:bottom_margin="100vp"
+                ohos:padding="10vp"
+                ohos:text="干预滑动，偏底部布局滑动时让其不被盖住"
+                ohos:text_color="#FFFFFF"
+                ohos:text_size="15fp"
+                ohos:visibility="visible"/>
+
+            <DirectionalLayout
+                ohos:id="$+id:bottom_action"
+                ohos:height="50vp"
+                ohos:width="match_parent"
+                ohos:align_parent_bottom="true"
+                ohos:background_element="#DBDBDB"
+                ohos:bottom_padding="8vp"
+                ohos:left_padding="10vp"
+                ohos:min_height="50vp"
+                ohos:orientation="horizontal"
+                ohos:right_padding="10vp">
+
+                <Image
+                    ohos:id="$+id:add_btn"
+                    ohos:height="35vp"
+                    ohos:width="35vp"
+                    ohos:image_src="$media:add_btn"
+                    ohos:layout_alignment="vertical_center"
+                    ohos:scale_mode="stretch"/>
+
+                <TextField
+                    ohos:id="$+id:edit_text"
+                    ohos:height="match_content"
+                    ohos:width="0vp"
+                    ohos:align_right="$id:add_btn"
+                    ohos:layout_alignment="vertical_center"
+                    ohos:weight="1"/>
+
+                <DirectionalLayout
+                    ohos:id="$+id:rightV"
+                    ohos:height="match_content"
+                    ohos:width="match_content"
+                    ohos:layout_alignment="vertical_center"
+                    ohos:orientation="horizontal">
+
+                    <Image
+                        ohos:id="$+id:emotion_btn"
+                        ohos:height="35vp"
+                        ohos:width="35vp"
+                        ohos:image_src="$media:icon_emotion"
+                        ohos:right_margin="10vp"
+                        ohos:scale_mode="stretch"/>
+
+                    <TextField
+                        ohos:id="$+id:textfield_input"
+                        ohos:height="35vp"
+                        ohos:width="50vp"
+                        ohos:background_element="#179E16"
+                        ohos:text="发送"
+                        ohos:text_alignment="center"
+                        ohos:text_color="#FFFFFF"
+                        ohos:text_size="15fp"/>
+                </DirectionalLayout>
+
+            </DirectionalLayout>
+
+        </com.example.library.view.content.RelativeContentContainer>
+
+        <!--下半部分面板-->
+        <com.example.library.view.panel.PanelContainer
+            ohos:id="$+id:panelc_container"
+            ohos:height="match_content"
+            ohos:width="match_parent"
+            ohos:background_element="$color:gray_50">
+            <!-- 每一项面板 -->
+            <!-- panel_layout 用于指定面板该 ID 对应的布局 ，必须项-->
+            <!-- panel_trigger 用于用户点击该 ID 对应的 View 时切换到该面板 -->
+            <!-- panel_toggle  用于当该面板显示时 ，用户再次点击 panel_trigger 对应的 View 时是否回切输入法-->
+
+            <com.example.library.view.panel.PanelView
+                ohos:id="$+id:panel_emotion"
+                ohos:height="200vp"
+                ohos:width="match_parent"
+                ohos:background_element="#ff0000"
+                app:panel_layout="$layout:panel_emotion_layout"
+                app:panel_name="emotion_btn"
+                app:panel_trigger="$id:emotion_btn"
+                />
+
+            <com.example.library.view.panel.PanelView
+                ohos:id="$+id:panel_textfield"
+                ohos:height="match_content"
+                ohos:width="match_parent"
+                ohos:background_element="#ffff00"
+                app:panel_name="add_btn"
+                app:panel_trigger="$id:textfield_input"
+                />
+
+            <com.example.library.view.panel.PanelView
+                ohos:id="$+id:panel_addition"
+                ohos:height="100vp"
+                ohos:width="match_parent"
+                ohos:background_element="#ffff00"
+                app:panel_name="add_btn"
+                app:panel_trigger="@id/add_btn"
+                />
+
+        </com.example.library.view.panel.PanelContainer>
+    </com.example.library.view.PanelSwitchLayout>
+</DirectionalLayout>

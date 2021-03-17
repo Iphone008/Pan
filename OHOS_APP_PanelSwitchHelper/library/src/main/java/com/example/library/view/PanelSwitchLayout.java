@@ -70,7 +70,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
     private PanelSwitchLayout mPanelSwitchLayout =null;
 
 
-//初始化 PanelSwitchLayout
+    //初始化 PanelSwitchLayout
     public PanelSwitchLayout(Context context) {
         super(context);
         HiLog.debug(LABEL," Run PanelSwitchLayout 1");
@@ -91,7 +91,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
     void init(){
         //设置监听器
         boolean isshow=isComponentDisplayed();
-        HiLog.info(LABEL," 当前View是否显示出来   "+isshow);
+        System.out.println(" 当前View是否显示出来   "+isshow);
         setArrangeListener(this);
         mPanelSwitchLayout=this;
     }
@@ -147,7 +147,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
         mEventHandler.removeTask(keyboardStateRunnable);
         contentContainer.getInputActionImpl().recycler();
         if (hasAttachLister) {
-                hasAttachLister = false;
+            hasAttachLister = false;
         }
     }
 
@@ -186,25 +186,43 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
         if (getChildCount() != 2) {
             throw new RuntimeException("PanelSwitchLayout -- PanelSwitchLayout should has two children,the first is ContentContainer,the other is PanelContainer！");
         }
-        HiLog.info(LABEL,"getChildCount  "+getChildCount());
+        System.out.println("getChildCount  "+getChildCount());
         Component firstView = getComponentAt(0);
         Component secondView = getComponentAt(1);
 
         if (firstView instanceof IContentContainer) {
-            HiLog.info(LABEL,"firstView  is run");
+            System.out.println("firstView  is run");
         } else {
             throw new RuntimeException("PanelSwitchLayout -- the first view isn't a IContentContainer");
         }
         contentContainer = (IContentContainer) firstView;
-        HiLog.info(LABEL,"assertView  get contentContainer is null "+(contentContainer==null));
+        System.out.println("assertView  get contentContainer is null "+(contentContainer==null));
         if (secondView instanceof PanelContainer) {
         } else {
             throw new RuntimeException("PanelSwitchLayout -- the second view is a ContentContainer, but the other isn't a PanelContainer！");
         }
         //需要調用一下assert 方法  让当前view可以拿到这个 view
         panelContainer = (PanelContainer) secondView;
-        HiLog.info(LABEL,"getPanelLayoutId() --> is size "+getPanelLayoutComponent().size());
+        System.out.println("getPanelLayoutId() --> is size "+getPanelLayoutComponent().size());
         panelContainer.setPanelLayoutId(getPanelLayoutComponent());
+    }
+    private void  getLayoutType(){
+        Component component = getComponentAt(0);
+        if (component instanceof RelativeContentContainer){
+            System.out.println("pppppppp   RelativeContentContainer is run  ");
+            RelativeContentContainer relativeContentContainer=(RelativeContentContainer)component;
+            relativeContentContainer.onFinishFlate();
+        }else if(component instanceof StackContentContainer){
+            System.out.println("pppppppp   StackContentContainer is run  ");
+            StackContentContainer stackContentContainer=(StackContentContainer)component;
+            stackContentContainer.onFinishFlate();
+        }else if (component instanceof DirectionalContentContainer){
+            System.out.println("pppppppp   DirectionalContentContainer is run  ");
+            DirectionalContentContainer directionalContentContainer=(DirectionalContentContainer)component;
+            directionalContentContainer.onFinishInflate();
+        }
+
+
     }
 
     //初始化监听器
@@ -230,7 +248,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
         });
 
         contentContainer.getResetActionImpl().setResetCallback(()->{
-            HiLog.info(LABEL,"初始化 添加页面 重置Panel ---> ");
+            System.out.println("初始化 添加页面 重置Panel ---> ");
             hookSystemBackByPanelSwitcher();
         });
 
@@ -238,15 +256,14 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
          * save panel that you want to use these to checkout
          */
         mPanelSparseArray = panelContainer.panelComponentMap;
-        HiLog.info(LABEL,"当前 mPanelSparseArray "+mPanelSparseArray.size());
         for (IPanelComponent iPanelComponent:mPanelSparseArray.values()){
             Component keyView=contentContainer.findTriggerView(iPanelComponent.getBindingTriggerViewId());
-            HiLog.info(LABEL,"当前 keyView : "+(keyView==null));
+
             keyView.setClickedListener(new ClickedListener() {
                 boolean Keyboard=true;
                 @Override
                 public void onClick(Component component) {
-                    HiLog.info(LABEL,"当前点击的事件是  ： "+component.getId());
+                    System.out.println("当前点击的事件是  ： "+component.getId());
                     long currentTime = System.currentTimeMillis();
                     if (currentTime - preClickTime <= Constants.getInstance().PROTECT_KEY_CLICK_DURATION) {
                         return;
@@ -255,18 +272,23 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
                     notifyViewClick(component);
 
                     int targetId = panelContainer.getPanelId(iPanelComponent);
-                    HiLog.info(LABEL,"iPanelComponent.isShowing() "+iPanelComponent.isShowing());
-                    if (panelId == targetId&&iPanelComponent.isShowing()) {
+//                    System.out.println("进入方法  点击时间的判断条件panelId : "+panelId+", targetId:"+targetId);
+//                    System.out.println("进入方法  点击时间的判断条件 iPanelComponent.isTriggerViewCanToggle(): "+iPanelComponent.isTriggerViewCanToggle());
+//                    System.out.println("进入方法  点击时间的判断条件iPanelComponent.isShowing() : "+iPanelComponent.isShowing());
+                    //&& iPanelComponent.isTriggerViewCanToggle() && iPanelComponent.isShowing()
+                    if (panelId == targetId&&iPanelComponent.isShowing() ) {
+                        boolean Keyboard=true;
+                        System.out.println("进入方法 ---------checkoutKeyboard（）1----");
                         if (Keyboard){
-                            HiLog.info(LABEL,"点击事件： ID相同，弹出键盘 "+Keyboard);
                             DisplayUtil.getInstance().showSoftInput();
                             Keyboard=false;
                         }else {
-                            HiLog.info(LABEL,"点击事件： ID相同，隐藏键盘 "+Keyboard);
                             DisplayUtil.getInstance().hideSoftInput();
                             Keyboard=true;
                         }
                     } else {
+                        System.out.println("进入方法 ---------checkoutPanel（）2----");
+                        DisplayUtil.getInstance().hideSoftInput();
                         checkoutPanel(targetId);
                     }
                     preClickTime=currentTime;
@@ -275,30 +297,6 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
         }
 
     }
-
-    //判断当前Component的点击状态
-   private void HidePanelStatus(int PanelId){
-       ((PanelView)mPanelSparseArray.get(PanelId)).setVisibility(Component.HIDE);
-   }
-
-    //尝试使用强制转换当前的第一个Component的类型
-    private void  getLayoutType(){
-        boolean getComponentStyle=false;
-        Component component = getComponentAt(0);
-        if (component instanceof RelativeContentContainer){
-            RelativeContentContainer relativeContentContainer=(RelativeContentContainer)component;
-            relativeContentContainer.onFinishFlate();
-        }else if(component instanceof StackContentContainer){
-            StackContentContainer stackContentContainer=(StackContentContainer)component;
-            stackContentContainer.onFinishFlate();
-        }else if (component instanceof DirectionalContentContainer){
-            DirectionalContentContainer directionalContentContainer=(DirectionalContentContainer)component;
-            directionalContentContainer.onFinishInflate();
-        }
-
-
-    }
-
 
 
     //绑定事件  OnViewClickListenerBuilder.OnViewClickListener
@@ -338,7 +336,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
      * 对于有导航栏的机型，使用该属性进行全屏显示不可取。
      */
     private int getCurrentStatusBarHeight(DeviceInfo deviceInfo) {
-        HiLog.info(LABEL,"getCurrentStatusBarHeight:  is run ");
+        System.out.println("getCurrentStatusBarHeight:  is run ");
         return deviceInfo.getStatusBarH();
     }
 
@@ -350,91 +348,91 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
     private int minLimitCloseKeyboardHeight;
     int sumI=0;
 
-//绑定视图  添加 panel
+    //绑定视图  添加 panel
     public void bindWindow(Ability ability, Window window,Component component) {
         DisplayUtil.hideSoftInput();
-        HiLog.info(LABEL," PanelSwitchLayout ability  is run   "+(ability==null));
+        System.out.println(" PanelSwitchLayout ability  is run   "+(ability==null));
         deviceRuntime = new DeviceRuntime(ability, window,component);
-        HiLog.info(LABEL,"deviceRuntime  is null "+deviceRuntime.toString());
+        System.out.println("deviceRuntime  is null "+deviceRuntime.toString());
         if (deviceRuntime != null) {
             window.setInputPanelDisplayType(WindowManager.LayoutConfig.INPUT_ADJUST_RESIZE);
             contentContainer.getInputActionImpl().updateFullScreenParams(deviceRuntime.isFullScreen, panelId, getCompatPanelHeight(panelId));
-             this.setLayoutRefreshedListener(new LayoutRefreshedListener() {
-                 @Override
-                 public void onRefreshed(Component component) {
+            this.setLayoutRefreshedListener(new LayoutRefreshedListener() {
+                @Override
+                public void onRefreshed(Component component) {
 
 
-                     HiLog.info(LABEL, "onGlobalLayout:  界面每一次变化的信息回调 "+component.getId());
+                    System.out.println( "onGlobalLayout:  界面每一次变化的信息回调 "+component.getId());
 
-                     int screenHeight = DisplayUtil.getScreenRealHeight(mContext);//获取屏幕高度
-                     HiLog.info(LABEL,"获取的屏幕高度 ："+screenHeight);
-                     int contentHeight = (int)DisplayUtil.getHeight(mContext)-Constants.NavigationBarHeght;//获取内容区域的高度 默认的是存在虚拟导航栏 p40 126
-                     HiLog.info(LABEL,"获取的内容高度 "+contentHeight);
-                     DeviceInfo info = deviceRuntime.getDeviceInfoByOrientation(mPanelSwitchLayout,true);
-                     HiLog.info(LABEL,"DeviceInfo info  "+info.toString());
-                     int curStatusHeight = getCurrentStatusBarHeight(info);
-                     int cusNavigationHeight = getCurrentNavigationHeight(deviceRuntime, info);
-                     int systemUIHeight = curStatusHeight + cusNavigationHeight;
-                     HiLog.info(LABEL,"DeviceInfo systemUIHeight  "+systemUIHeight);
-                     HiLog.info(LABEL,"-----------------------------------------------bindwindow--------------------");
+                    int screenHeight = DisplayUtil.getScreenRealHeight(mContext);//获取屏幕高度
+                    System.out.println("获取的屏幕高度 ："+screenHeight);
+                    int contentHeight = (int)DisplayUtil.getHeight(mContext)-Constants.NavigationBarHeght;//获取内容区域的高度 默认的是存在虚拟导航栏 p40 126
+                    System.out.println("获取的内容高度 "+contentHeight);
+                    DeviceInfo info = deviceRuntime.getDeviceInfoByOrientation(mPanelSwitchLayout,true);
+                    System.out.println("DeviceInfo info  "+info.toString());
+                    int curStatusHeight = getCurrentStatusBarHeight(info);
+                    int cusNavigationHeight = getCurrentNavigationHeight(deviceRuntime, info);
+                    int systemUIHeight = curStatusHeight + cusNavigationHeight;
+                    System.out.println("DeviceInfo systemUIHeight  "+systemUIHeight);
+                    System.out.println("-----------------------------------------------bindwindow--------------------");
 
-                     lastNavigationBarShow = deviceRuntime.isNavigationBarShow;
-                     int keyboardHeight = 300;
-                     HiLog.info(LABEL,"DeviceInfo keyboardHeight  "+keyboardHeight);
-                     int NavigationBarH = (int) info.getNavigationBarH();//获取虚拟导航栏高度
-                     int realHeight = keyboardHeight + NavigationBarH;
-                     minLimitCloseKeyboardHeight = (int)info.getNavigationBarH();
-                     HiLog.info(LABEL,"isKeyboardShowing  :  "+isKeyboardShowing);
-                     if (isKeyboardShowing) {
-                         if (keyboardHeight <= minLimitOpenKeyboardHeight) {
-                             isKeyboardShowing = false;
-                             if (isKeyboardState()) {
-                                 checkoutPanel(Constants.PANEL_NONE);
-                             }
-                             notifyKeyboardState(false);
-                         } else {
-                             /**
-                              * 拉起输入法的时候递增，隐藏输入法的时候递减，机型较差的手机需要 requestLayout() 动态更新布局
-                              */
-                             if (keyboardHeight != lastKeyboardHeight) {
-                                 PanelUtil.getInstance().setKeyBoardHeight(mAbility, realHeight);
-                                 postLayout();
-                             }
-                         }
-                     } else {
-                         HiLog.info(LABEL,"当前的keyboardHeight : "+keyboardHeight);
-                         HiLog.info(LABEL,"当前的minLimitOpenKeyboardHeight  : "+minLimitOpenKeyboardHeight);
-                         if (keyboardHeight > minLimitOpenKeyboardHeight) {
-                             isKeyboardShowing = true;
-                             if (keyboardHeight > lastKeyboardHeight) {
-                                 HiLog.info(LABEL, "onGlobalLayout: $TAG#onGlobalLayout try to set KeyBoardHeight : $realHeight，isShow $isKeyboardShowing");
-                                 PanelUtil.getInstance().setKeyBoardHeight(mAbility, realHeight);
-                                 postLayout();
-                             }
-                             if (!isKeyboardState()) {
-                                 checkoutPanel(Constants.getInstance().PANEL_KEYBOARD, false);
-                             }
-                             notifyKeyboardState(true);
-                         } else {
-                             //1.3.5 实时兼容导航栏动态隐藏调整布局
-                             String v = lastContentHeight + "";
+                    lastNavigationBarShow = deviceRuntime.isNavigationBarShow;
+                    int keyboardHeight = 300;
+                    System.out.println("DeviceInfo keyboardHeight  "+keyboardHeight);
+                    int NavigationBarH = (int) info.getNavigationBarH();//获取虚拟导航栏高度
+                    int realHeight = keyboardHeight + NavigationBarH;
+                    minLimitCloseKeyboardHeight = (int)info.getNavigationBarH();
+                    System.out.println("isKeyboardShowing  :  "+isKeyboardShowing);
+                    if (isKeyboardShowing) {
+                        if (keyboardHeight <= minLimitOpenKeyboardHeight) {
+                            isKeyboardShowing = false;
+                            if (isKeyboardState()) {
+                                checkoutPanel(Constants.PANEL_NONE);
+                            }
+                            notifyKeyboardState(false);
+                        } else {
+                            /**
+                             * 拉起输入法的时候递增，隐藏输入法的时候递减，机型较差的手机需要 requestLayout() 动态更新布局
+                             */
+                            if (keyboardHeight != lastKeyboardHeight) {
+                                PanelUtil.getInstance().setKeyBoardHeight(mAbility, realHeight);
+                                postLayout();
+                            }
+                        }
+                    } else {
+                        System.out.println("当前的keyboardHeight : "+keyboardHeight);
+                        System.out.println("当前的minLimitOpenKeyboardHeight  : "+minLimitOpenKeyboardHeight);
+                        if (keyboardHeight > minLimitOpenKeyboardHeight) {
+                            isKeyboardShowing = true;
+                            if (keyboardHeight > lastKeyboardHeight) {
+                                System.out.println( "onGlobalLayout: $TAG#onGlobalLayout try to set KeyBoardHeight : $realHeight，isShow $isKeyboardShowing");
+                                PanelUtil.getInstance().setKeyBoardHeight(mAbility, realHeight);
+                                postLayout();
+                            }
+                            if (!isKeyboardState()) {
+                                checkoutPanel(Constants.getInstance().PANEL_KEYBOARD, false);
+                            }
+                            notifyKeyboardState(true);
+                        } else {
+                            //1.3.5 实时兼容导航栏动态隐藏调整布局
+                            String v = lastContentHeight + "";
 
-                             //出现问题。
-                             HiLog.info(LABEL,"v "+v);
-                             if (!v.equals("")) {
-                                 String mv = lastNavigationBarShow + "";
-                                 if (!mv.equals("")) {
-                                     if (lastContentHeight != contentHeight && lastNavigationBarShow != deviceRuntime.isNavigationBarShow) {
-                                         postLayout();
-                                     }
-                                 }
-                             }
-                         }
-                     }
-                     lastKeyboardHeight = keyboardHeight;
-                     lastContentHeight = contentHeight;
-                 }
-             });
+                            //出现问题。
+                            System.out.println("v "+v);
+                            if (!v.equals("")) {
+                                String mv = lastNavigationBarShow + "";
+                                if (!mv.equals("")) {
+                                    if (lastContentHeight != contentHeight && lastNavigationBarShow != deviceRuntime.isNavigationBarShow) {
+                                        postLayout();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    lastKeyboardHeight = keyboardHeight;
+                    lastContentHeight = contentHeight;
+                }
+            });
             hasAttachLister=true;
 
         }
@@ -453,7 +451,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
             return true;
         }
         if (deviceRuntime != null) {
-            HiLog.info(LABEL,"deviceRuntime not null");
+            System.out.println("deviceRuntime not null");
             DeviceInfo deviceInfo = deviceRuntime.getDeviceInfoByOrientation(mPanelSwitchLayout);
             /**
              * 当还没有进行输入法高度获取时，由于兼容性测试之后设置的默认高度无法兼容所有机型
@@ -463,8 +461,8 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
 
             int paddingTop = getPaddingTop();
             int allHeight = deviceInfo.getScreenH();
-            HiLog.info(LABEL,"deviceInfo onArrage( --> changed  l "+l+" t "+t+" r "+r+" b "+b);
-            HiLog.info(LABEL,"获取的所有高度  allHeight :  "+deviceRuntime.isNavigationBarShow);
+            System.out.println("deviceInfo onArrage( --> changed  l "+l+" t "+t+" r "+r+" b "+b);
+            System.out.println("获取的所有高度  allHeight :  "+deviceRuntime.isNavigationBarShow);
             //状态栏  是否显示
             String thisPanelStatus="";
             if (Constants.DEBUG){
@@ -479,7 +477,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
                         thisPanelStatus="显示面板输入";
                         break;
                 }
-                HiLog.info(LABEL,"当前面板状态 ============>"+thisPanelStatus);
+                System.out.println("当前面板状态 ============>"+thisPanelStatus);
             }
             //获取虚拟键盘是否存在
             if (deviceRuntime.isNavigationBarShow) {
@@ -495,17 +493,17 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
                  * 如果状态栏与刘海重叠，则 screenHeight 包含刘海
                  * 这样抽象逻辑变得更加简单。
                  */
-                HiLog.info(LABEL,"deviceRuntime.isPortrait  "+deviceRuntime.isPortrait);
-                HiLog.info(LABEL,"deviceRuntime.isPad  "+deviceRuntime.isPad);
+                System.out.println("deviceRuntime.isPortrait  "+deviceRuntime.isPortrait);
+                System.out.println("deviceRuntime.isPad  "+deviceRuntime.isPad);
                 allHeight -= deviceInfo.getCurrentNavigationBarHeightWhenVisible(deviceRuntime.isPortrait, deviceRuntime.isPad);
-                HiLog.info(LABEL,"allHeight "+allHeight);
+                System.out.println("allHeight "+allHeight);
             }
 
-            HiLog.info(LABEL,"mComponent  is null :  "+(mComponent==null));
+            System.out.println("mComponent  is null :  "+(mComponent==null));
             int[] localLocation = DisplayUtil.getLocationOnScreen(this);
-            HiLog.info(LABEL,"localLocation :  "+localLocation+" localLocation  size  is : "+localLocation.length);
+            System.out.println("localLocation :  "+localLocation+" localLocation  size  is : "+localLocation.length);
             allHeight -= localLocation[1];
-            HiLog.info(LABEL,"allHeight  "+allHeight);
+            System.out.println("allHeight  "+allHeight);
 
             contentContainerTop = getContentContainerTop(compatPanelHeight);
             contentContainerTop += paddingTop;
@@ -513,25 +511,25 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
             panelContainerTop = contentContainerTop + contentContainerHeight;
 
             boolean changeBounds = isBoundChange(l, contentContainerTop, r, panelContainerTop + compatPanelHeight);
-            HiLog.info(LABEL, "onLayout:  changeBounds " + changeBounds);
+            System.out.println( "onLayout:  changeBounds " + changeBounds);
             if (changeBounds) {
                 boolean reverseResetState = reverseResetState();
-                HiLog.info(LABEL, "onLayout:  reverseResetState " + reverseResetState);
+                System.out.println( "onLayout:  reverseResetState " + reverseResetState);
                 if (reverseResetState) {
                     setTransition(animationSpeed, panelId);
                 }
             } else {
 //                如果功能面板的互相切换，则需要判断是否存在高度不一致，如果不一致则需要过渡
-                HiLog.info(LABEL, "onLayout: lastPanelHeight:" + lastPanelHeight+", compatPanelHeight:"+compatPanelHeight);
+                System.out.println( "onLayout: lastPanelHeight:" + lastPanelHeight+", compatPanelHeight:"+compatPanelHeight);
                 if (lastPanelHeight != -1 && lastPanelHeight != compatPanelHeight) {
-                    HiLog.info(LABEL,"panelId ");
+                    System.out.println("panelId ");
                     setTransition(animationSpeed, panelId);
                 }
             }
             //添加Panel Layout Id
 
             contentContainer.layoutContainer(l, contentContainerTop, r, contentContainerTop + contentContainerHeight,
-                          contentScrollMeasurers, compatPanelHeight, contentScrollOutsizeEnable, isResetState());
+                    contentScrollMeasurers, compatPanelHeight, contentScrollOutsizeEnable, isResetState());
             contentContainer.changeContainerHeight(contentContainerHeight);
             panelContainer.changeContainerHeight(compatPanelHeight);
             this.lastPanelHeight = compatPanelHeight;
@@ -559,7 +557,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
         } else {
             result = 0;
         }
-        HiLog.info(LABEL, "getContentContainerTop: " + result);
+        System.out.println( "getContentContainerTop: " + result);
         return result;
     }
 
@@ -571,10 +569,10 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
     }
 
     private boolean isBoundChange(int l, int t, int r, int b) {
-        HiLog.info(LABEL,"isBoundChange  is run  l"+l);
-        HiLog.info(LABEL,"isBoundChange  is run  t"+t);
-        HiLog.info(LABEL,"isBoundChange  is run  r"+r);
-        HiLog.info(LABEL,"isBoundChange  is run  b"+b);
+        System.out.println("isBoundChange  is run  l"+l);
+        System.out.println("isBoundChange  is run  t"+t);
+        System.out.println("isBoundChange  is run  r"+r);
+        System.out.println("isBoundChange  is run  b"+b);
         boolean change;
         if (realBounds == null || realBounds.left != l || realBounds.top != t || realBounds.right != r || realBounds.bottom != b) {
             change = true;
@@ -582,7 +580,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
             change = false;
         }
         realBounds = new Rect(l, t, r, b);
-        HiLog.info(LABEL,"isBoundChange  is  change --->"+realBounds);
+        System.out.println("isBoundChange  is  change --->"+realBounds);
         return change;
     }
 
@@ -602,26 +600,26 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
      * @return
      */
     public boolean checkoutPanel(int panelId) {
-        HiLog.info(LABEL,"get checkoutPanel panelId is run  "+panelId);
-        HiLog.info(LABEL,"get checkoutPanel doingCheckout  "+doingCheckout);
+        System.out.println("get checkoutPanel panelId is run  "+panelId);
+        System.out.println("get checkoutPanel doingCheckout  "+doingCheckout);
         if (doingCheckout) {
             return false;
         }
-        HiLog.info(LABEL,"get checkoutPanel doingCheckout  "+doingCheckout);
+        System.out.println("get checkoutPanel doingCheckout  "+doingCheckout);
         doingCheckout = true;
-        HiLog.info(LABEL,"get checkoutPanel this.panelId  "+this.panelId);
+        System.out.println("get checkoutPanel this.panelId  "+this.panelId);
         if (panelId == this.panelId) {
             doingCheckout = false;
             return false;
         }
         switch (panelId) {
             case Constants.PANEL_NONE:
-                HiLog.info(LABEL,"PANEL_NONE is run 参数一  ");
+                System.out.println("PANEL_NONE is run 参数一  ");
 //                contentContainer.getInputActionImpl().hideKeyboard(true);
-//                contentContainer.getResetActionImpl().enableReset(false);
+                contentContainer.getResetActionImpl().enableReset(false);
                 break;
             case Constants.PANEL_KEYBOARD:
-                HiLog.info(LABEL,"PANEL_KEYBOARD is run 参数一  ");
+                System.out.println("PANEL_KEYBOARD is run 参数一  ");
                 if (mCheckoutKeyboard) {
                     if (!contentContainer.getInputActionImpl().showKeyboard()) {
                         doingCheckout = false;
@@ -631,12 +629,12 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
                 contentContainer.getResetActionImpl().enableReset(true);
                 break;
             default:
-                HiLog.info(LABEL,"default is run 参数一  ");
-                HiLog.info(LABEL,"checkoutPanel --> getWidth() ,"+getWidth()+" getPaddingLeft() ,"+getPaddingLeft()+" getPaddingRight() ,"+getPaddingRight());
-                HiLog.info(LABEL,"getCompatPanelHeight(panelId)  ,"+getCompatPanelHeight(panelId));
+                System.out.println("default is run 参数一  ");
+                System.out.println("checkoutPanel --> getWidth() ,"+getWidth()+" getPaddingLeft() ,"+getPaddingLeft()+" getPaddingRight() ,"+getPaddingRight());
+                System.out.println("getCompatPanelHeight(panelId)  ,"+getCompatPanelHeight(panelId));
                 Pair size = new Pair(getWidth() - getPaddingLeft() - getPaddingRight(), getCompatPanelHeight(panelId));//当前页面
                 Pair oldSize = panelContainer.showPanel(panelId, size);
-                HiLog.info(LABEL,"----->"+oldSize.toString());
+                System.out.println("----->"+oldSize.toString());
                 if (size.f != oldSize.f || size.s != oldSize.s) {
                     notifyPanelSizeChange(panelContainer.getPanelView(panelId), DisplayUtil.getInstance().isPortrait(mContext), (int) oldSize.f, (int) oldSize.s, (int) size.f, (int) size.s);
                 }
@@ -646,7 +644,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
         }
 
         this.lastPanelId = this.panelId;
-        HiLog.info(LABEL,"lastPanelId  ： "+lastPanelId);
+        System.out.println("lastPanelId  ： "+lastPanelId);
         this.panelId = panelId;
         //强制刷新页面
         postLayout();
@@ -655,29 +653,28 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
         return true;
     }
     //隐藏Panel
-    public  void  HidePanelView(int PanelID){
-        IPanelComponent component=mPanelSparseArray.get(PanelID);
-        ((PanelView)component).setVisibility(Component.HIDE);
+    public  boolean HidePanelView(){
+        return panelContainer.HidePanelView();
     }
 
     public boolean checkoutPanel(int panelId, boolean checkoutKeyboard) {
-        HiLog.info(LABEL,"checkoutPanel 传入的 panelId ： "+panelId);
+        System.out.println("checkoutPanel 传入的 panelId ： "+panelId);
         mCheckoutKeyboard = checkoutKeyboard;
-        HiLog.info(LABEL, "checkoutPanel: panelId and  checkoutKeyboard  is run ");
+        System.out.println( "checkoutPanel: panelId and  checkoutKeyboard  is run ");
         if (doingCheckout) {
-            HiLog.info(LABEL, "checkoutPanel: is checkouting,just ignore!");
+            System.out.println( "checkoutPanel: is checkouting,just ignore!");
             return false;
         }
         doingCheckout = true;
         if (panelId == this.panelId) {
-            HiLog.info(LABEL, "checkoutPanel: current panelId is " + panelId + ",just ignore!");
+            System.out.println( "checkoutPanel: current panelId is " + panelId + ",just ignore!");
             doingCheckout = false;
             return false;
         }
         switch (panelId) {
             case Constants.PANEL_NONE:
                 //隐藏键盘
-                HiLog.info(LABEL, "PANEL_NONE   is run");
+                System.out.println( "PANEL_NONE   is run");
                 DisplayUtil.hideSoftInput();
                 contentContainer.getInputActionImpl().hideKeyboard(true);
                 contentContainer.getResetActionImpl().enableReset(false);
@@ -685,7 +682,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
             case Constants.PANEL_KEYBOARD:
                 if (mCheckoutKeyboard) {
                     if (!contentContainer.getInputActionImpl().showKeyboard()) {
-                        HiLog.info(LABEL, "checkoutPanel: system show keyboard fail, just ignore! ");
+                        System.out.println( "checkoutPanel: system show keyboard fail, just ignore! ");
                         doingCheckout = false;
                         return false;
                     }
@@ -700,16 +697,16 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
                 }
                 //隐藏键盘
                 DisplayUtil.hideSoftInput();
-                contentContainer.getInputActionImpl().hideKeyboard(false);
-                contentContainer.getResetActionImpl().enableReset(true);
+//                contentContainer.getInputActionImpl().hideKeyboard(false);
+//                contentContainer.getResetActionImpl().enableReset(true);
                 break;
         }
-        HiLog.info(LABEL,"lastPanelId  ---- "+lastPanelId);
-        HiLog.info(LABEL,"panelId ------"+this.panelId);
+        System.out.println("lastPanelId  ---- "+lastPanelId);
+        System.out.println("panelId ------"+this.panelId);
         this.lastPanelId = this.panelId;
 
         this.panelId = panelId;
-        HiLog.info(LABEL, "checkoutPanel: checkout success ! ");
+        System.out.println( "checkoutPanel: checkout success ! ");
         postLayout();
         notifyPanelChange(this.panelId);
         doingCheckout = false;
@@ -725,12 +722,12 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
     }
 
     public boolean isResetState() {
-        HiLog.info(LABEL, "isResetState:   panelId  是 " + panelId);
+        System.out.println( "isResetState:   panelId  是 " + panelId);
         return isResetState(panelId);
     }
 
     private boolean isKeyboardState(int panelId) {
-        HiLog.info(LABEL,"isKeyboardState  当前ID  "+panelId);
+        System.out.println("isKeyboardState  当前ID  "+panelId);
         return panelId == Constants.PANEL_KEYBOARD ? true : false;
     }
 
@@ -739,22 +736,22 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
     }
 
     private boolean isResetState(int panelId) {
-        HiLog.info(LABEL, "isResetState: panelId  " + panelId);
+        System.out.println( "isResetState: panelId  " + panelId);
         return panelId == Constants.PANEL_NONE ? true : false;
     }
 
     private int getCompatPanelHeight(int panelId) {
-        HiLog.info(LABEL,"getCompatPanelHeight:  is run ");
-        HiLog.info(LABEL,"getCompatPanelHeight  panelId  "+panelId);
-        HiLog.info(LABEL,"getCompatPanelHeight  isPanelState(panelId)  "+isPanelState(panelId));
+        System.out.println("getCompatPanelHeight:  is run ");
+        System.out.println("getCompatPanelHeight  panelId  "+panelId);
+        System.out.println("getCompatPanelHeight  isPanelState(panelId)  "+isPanelState(panelId));
         if (isPanelState(panelId)) {
             PanelHeightMeasurer panelHeightMeasurer = (PanelHeightMeasurer) panelHeightMeasurers.get(panelId);
             if (panelHeightMeasurer != null) {
-                HiLog.info(LABEL,"panelHeightMeasurer : "+panelHeightMeasurer);
+                System.out.println("panelHeightMeasurer : "+panelHeightMeasurer);
                 //如果输入法还没有测量或者不同步输入法高度，则是有默认高度 v hasMeasuredKeyboard(getContext()
                 if (!PanelUtil.getInstance().hasMeasuredKeyboard(mContext) || !panelHeightMeasurer.synchronizeKeyboardHeight()) {
                     int result = panelHeightMeasurer.getTargetPanelDefaultHeight();
-                    HiLog.info(LABEL, "getCompatPanelHeight: getCompatPanelHeight by default panel " + result);
+                    System.out.println( "getCompatPanelHeight: getCompatPanelHeight by default panel " + result);
                     return result;
                 }
 
@@ -762,7 +759,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
 
         }
         int result = PanelUtil.getInstance().getKeyBoardHeight(mContext);
-        HiLog.info(LABEL, "getCompatPanelHeight: " + result);
+        System.out.println( "getCompatPanelHeight: " + result);
         return result;
     }
 
@@ -777,13 +774,13 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
     }
 
     private void notifyPanelChange(int panelId) {
-        HiLog.info(LABEL,"notifyPanelChange is run ");
+        System.out.println("notifyPanelChange is run ");
         if (panelChangeListeners != null) {
-            HiLog.info(LABEL,"panelChangeListeners  not null");
+            System.out.println("panelChangeListeners  not null");
             for (OnPanelChangeListener listener : panelChangeListeners) {
                 switch (panelId) {
                     case Constants.PANEL_NONE:
-                        HiLog.info(LABEL,"notifyPanelChange  PANEL_NONE  is run");
+                        System.out.println("notifyPanelChange  PANEL_NONE  is run");
                         listener.onNone();
                         break;
                     case Constants.PANEL_KEYBOARD:
@@ -825,8 +822,8 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
 
 
     public boolean hookSystemBackByPanelSwitcher() {
-        HiLog.info(LABEL,"hookSystemBackByPanelSwitcher  is run ");
-        HiLog.info(LABEL,"!isResetState()   "+!isResetState());
+        System.out.println("hookSystemBackByPanelSwitcher  is run ");
+        System.out.println("!isResetState()   "+!isResetState());
         if (!isResetState()) {
             //模仿系统输入法隐藏，如果直接掉  checkoutPanel(Constants.PANEL_NONE)，可能导致隐藏时上层 recyclerview 因为 layout 导致界面出现短暂卡顿。
             if (isKeyboardState()) {
@@ -878,11 +875,11 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
         @Override
         public void run() {
             boolean result = checkoutPanel(Constants.getInstance().PANEL_KEYBOARD);
-            HiLog.info(LABEL,"result "+result);
+            System.out.println("result "+result);
             if (!result && panelId != Constants.PANEL_KEYBOARD && retry) {
                 eventHandler = new EventHandler(EventRunner.getMainEventRunner());
                 eventHandler.postTask(this, delay);
-                HiLog.info(LABEL, "" + eventHandler.isIdle());
+                System.out.println( "" + eventHandler.isIdle());
             }
             retry = false;
         }

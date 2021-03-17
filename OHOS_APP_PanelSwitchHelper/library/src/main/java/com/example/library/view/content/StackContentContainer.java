@@ -54,7 +54,7 @@ public class StackContentContainer extends StackLayout implements IContentContai
     public void onFinishFlate(){
         contentContainer = new ContentContainerImpl(this,autoResetByOnTouch, editTextId, autoResetId);
         TextField editText = getInputActionImpl().getFullScreenPixelInputView();
-        addComponent(editText,0,new LayoutConfig(1,1));
+//        addComponent(editText,0,new LayoutConfig(1,1));
     }
 
 

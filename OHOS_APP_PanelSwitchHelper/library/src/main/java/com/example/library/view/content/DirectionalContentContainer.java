@@ -54,7 +54,7 @@ public class DirectionalContentContainer extends DirectionalLayout implements IC
         TextField editText = getInputActionImpl().getFullScreenPixelInputView();
         if (editText != null) {
             ComponentContainer.LayoutConfig config = new ComponentContainer.LayoutConfig(1, 1);
-            addComponent(editText, 0, config);
+//            addComponent(editText, 0, config);
         }
     }
 

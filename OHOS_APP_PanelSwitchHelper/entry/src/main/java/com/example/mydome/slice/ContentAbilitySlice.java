@@ -12,14 +12,21 @@ import com.example.library.view.panel.IPanelComponent;
 import com.example.library.view.panel.PanelView;
 import com.example.mydome.Constants;
 import com.example.mydome.ResourceTable;
+import com.example.mydome.anno.ApiContentType;
 import com.example.mydome.bean.ChatInfo;
 import com.example.mydome.provider.ChatProvider;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.*;
+import ohos.agp.utils.Color;
+import ohos.agp.window.service.Window;
+import ohos.agp.window.service.WindowManager;
+import ohos.global.resource.NotExistException;
+import ohos.global.resource.WrongTypeException;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +34,10 @@ public class ContentAbilitySlice extends AbilitySlice {
 
     private Text mTitleText;
     private PanelSwitchLayout mPanelSwitchLayout;
-    private RelativeContentContainer mRelativeContentContainer;
     private ListContainer mListContainer;
     private Image emotion_btn, addbt;
 
+    private Window mWindow;
     private PanelSwitchHelper mHelper;
     private ChatProvider mChatProvider;
     private int mType;
@@ -44,17 +51,17 @@ public class ContentAbilitySlice extends AbilitySlice {
         super.onStart(intent);
         mType = intent.getIntParam(Constants.KEY_CONTENT_TYPE, 0);
         switch (mType) {
-            case 0:
+            case ApiContentType.Linear:
                 super.setUIContent(ResourceTable.Layout_ability_content_liner);
                 break;
-            case 1:
+            case ApiContentType.Relative:
                 super.setUIContent(ResourceTable.Layout_ability_content_rel);
                 break;
-            case 2:
-                super.setUIContent(ResourceTable.Layout_ability_content_liner);
+            case ApiContentType.Frame:
+                super.setUIContent(ResourceTable.Layout_ability_content_fram);
                 break;
-            case 3:
-                super.setUIContent(ResourceTable.Layout_ability_content_liner);
+            case ApiContentType.CUS:
+                super.setUIContent(ResourceTable.Layout_ability_content_cus);
                 break;
         }
         //构建Panel的LayoutComponent源
@@ -65,27 +72,26 @@ public class ContentAbilitySlice extends AbilitySlice {
     }
 
     private void initView() {
+        mWindow = this.getWindow();
+        mWindow.setInputPanelDisplayType(WindowManager.LayoutConfig.INPUT_ADJUST_PAN);
         mPanelSwitchLayout = (PanelSwitchLayout) findComponentById(ResourceTable.Id_panel_switch_layout);
-        mRelativeContentContainer = (RelativeContentContainer) findComponentById(ResourceTable.Id_content_view);
         mTitleText = (Text) findComponentById(ResourceTable.Id_titleText);
         addbt = (Image) findComponentById(ResourceTable.Id_add_btn);
         emotion_btn = (Image) findComponentById(ResourceTable.Id_emotion_btn);
 
         mPanelSwitchLayout.setPanelLayoutId(PanelLayoutId);
         mPanelSwitchLayout.onFinishInflate();
-        /*mPanelSwitchLayout.onFinishInflate();*/
-        mRelativeContentContainer.onFinishFlate();
         switch (mType) {
-            case 0:
+            case ApiContentType.Linear:
                 mTitleText.setText("线性布局");
                 break;
-            case 1:
+            case ApiContentType.Relative:
                 mTitleText.setText("相对布局");
                 break;
-            case 2:
+            case ApiContentType.Frame:
                 mTitleText.setText("帧布局");
                 break;
-            case 3:
+            case ApiContentType.CUS:
                 mTitleText.setText("自定义布局");
                 break;
         }

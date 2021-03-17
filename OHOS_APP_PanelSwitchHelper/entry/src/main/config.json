@@ -79,6 +79,42 @@
         "label": "entry",
         "type": "page",
         "launchType": "standard"
+      },
+      {
+        "orientation": "unspecified",
+        "name": "com.example.mydome.ChatCusContentScrollAbility",
+        "icon": "$media:icon",
+        "description": "$string:contentability_description",
+        "label": "entry",
+        "type": "page",
+        "launchType": "standard"
+      },
+      {
+        "orientation": "unspecified",
+        "name": "com.example.mydome.CusPanelAbility",
+        "icon": "$media:icon",
+        "description": "$string:contentability_description",
+        "label": "entry",
+        "type": "page",
+        "launchType": "standard"
+      },
+      {
+        "orientation": "unspecified",
+        "name": "com.example.mydome.DefaultHeightPanelAbility",
+        "icon": "$media:icon",
+        "description": "$string:contentability_description",
+        "label": "entry",
+        "type": "page",
+        "launchType": "standard"
+      },
+      {
+        "orientation": "unspecified",
+        "name": "com.example.mydome.ResetAbility",
+        "icon": "$media:icon",
+        "description": "$string:contentability_description",
+        "label": "entry",
+        "type": "page",
+        "launchType": "standard"
       }
     ],
     "metaData": {
