@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_content"
+    ohos:width="match_parent"
+    ohos:alignment="left"
+
+    ohos:orientation="horizontal"
+    >
+    <Image
+        ohos:id="$+id:avatar"
+        ohos:height="40vp"
+        ohos:width="40vp"
+        ohos:scale_mode="inside"
+        ohos:top_margin="15vp"
+        ohos:image_src="$media:avatar_android"
+        ohos:left_margin="10vp"
+        />
+    <Text
+        ohos:id="$+id:text"
+        ohos:height="match_content"
+        ohos:padding="10vp"
+        ohos:width="match_content"
+        ohos:left_margin="3vp"
+        ohos:text_size="14fp"
+        ohos:top_margin="15vp"
+        ohos:right_margin="70vp"
+        ohos:multiple_lines="true"
+        ohos:text="gfd"
+        ohos:background_element="$graphic:chat_left_bg"/>
+
+
+
+
+</DirectionalLayout>

@@ -10,6 +10,7 @@ public class CusPanelView extends ComponentContainer implements IPanelComponent 
     private boolean isToggle = true;
     private boolean isShowState = false;
     private Component LayoutComponent = null;
+    private String panelName;
 
     public CusPanelView(Context context) {
         super(context);
@@ -26,8 +27,9 @@ public class CusPanelView extends ComponentContainer implements IPanelComponent 
     }
 
     private void initView(Context context, AttrSet attrSet) {
-        triggerViewId = attrSet.getAttr("cus_panel_trigger").map(Attr::getIntegerValue).orElse(-1);
-        isToggle = attrSet.getAttr("cus_panel_toggle").map(Attr::getBoolValue).orElse(false);
+        panelName = attrSet.getAttr("panel_name").map(Attr::getStringValue).orElse("");
+        triggerViewId = attrSet.getAttr("panel_trigger").map(Attr::getIntegerValue).orElse(-1);
+        isToggle = attrSet.getAttr("panel_toggle").map(Attr::getBoolValue).orElse(false);
 
         Text text = new Text(context);
         text.setText("自定义面板");
@@ -37,7 +39,7 @@ public class CusPanelView extends ComponentContainer implements IPanelComponent 
 
     @Override
     public int getBindingTriggerViewId() {
-        return 0;
+        return triggerViewId;
     }
 
     @Override
@@ -78,6 +80,7 @@ public class CusPanelView extends ComponentContainer implements IPanelComponent 
         } else {
             throw new RuntimeException("PanelView -- should be a view!");
         }
+        System.out.println("开始绘制CusPanelView");
         addComponent(LayoutComponent);
     }
 }

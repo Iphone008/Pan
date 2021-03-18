@@ -14,7 +14,7 @@
         ohos:background_element="$color:colorPrimary"
         ohos:bottom_padding="5vp"
         ohos:left_padding="20vp"
-        ohos:text="继承 IPanelView 实现 PanelView，点击左下角 + 试试吧"
+        ohos:text="继承 IPanelView 实现 PanelView，点击右下角的表情头像"
         ohos:text_color="$color:btn_bg"
         ohos:text_size="13fp"
         ohos:top_padding="5vp"/>
@@ -125,22 +125,22 @@
                 app:panel_trigger="$id:textfield_input"
                 />
 
-            <com.example.library.view.panel.PanelView
-                ohos:id="$+id:panel_emotion1"
-                ohos:height="match_content"
-                ohos:width="match_parent"
-                ohos:background_element="#000000"
-                app:panel_name="emotion_btn"
-                app:panel_trigger="$id:emotion_btn"
-                />
-            <!--<com.example.demo.scene.api.CusPanelView
+<!--            <com.example.library.view.panel.PanelView-->
+<!--                ohos:id="$+id:panel_emotion1"-->
+<!--                ohos:height="match_content"-->
+<!--                ohos:width="match_parent"-->
+<!--                ohos:background_element="#000000"-->
+<!--                app:panel_name="emotion_btn"-->
+<!--                app:panel_trigger="$id:emotion_btn"-->
+<!--                />-->
+            <com.example.demo.scene.api.CusPanelView
                 ohos:id="$+id:panel_emotion"
                 ohos:height="match_content"
                 ohos:width="match_parent"
                 ohos:background_element="#000000"
                 app:panel_name="emotion_btn"
                 app:panel_trigger="$id:emotion_btn"
-                />-->
+                />
 
         </com.example.library.view.panel.PanelContainer>
 

@@ -45,9 +45,9 @@ public class RelativeContentContainer extends DependentLayout implements IConten
     //获取当前Containner 数据的
     private void initView(Context context, AttrSet attrSet) {
         HiLog.info(LABEL, "initView run start ");
-        editTextid = attrSet.getAttr("edit_view").get().getIntegerValue();
-        autoResetid = attrSet.getAttr("auto_reset_area").get().getIntegerValue();
-        autoResetByOnTouch = attrSet.getAttr("auto_reset_enable").get().getBoolValue();
+        editTextid = attrSet.getAttr("edit_view").map(Attr::getIntegerValue).orElse(-1);
+        autoResetid = attrSet.getAttr("auto_reset_area").map(Attr::getIntegerValue).orElse(-1);
+        autoResetByOnTouch = attrSet.getAttr("auto_reset_enable").map(Attr::getBoolValue).orElse(true);
         HiLog.info(LABEL, "RelativeContentContainer  获取的自定义属性  \n editTextid " + editTextid + "\n autoResetid " + autoResetid + "\n  autoResetByOnTouch " + autoResetByOnTouch);
     }
 

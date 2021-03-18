@@ -1,10 +1,20 @@
 apply plugin: 'com.huawei.ohos.hap'
 ohos {
+    signingConfigs {
+        debug {
+            storeFile file('F:/key/panel.p12')
+            storePassword '00000018C5FD4F620F284315BAE385E9F855B5A34F43F93DB570028F09FF652FE4709AC3D218BEB8'
+            keyAlias 'panel'
+            keyPassword '0000001872C3257DE2F6F467DE9975E1410247632BDE597E0CE57123514841A644486D2631CB2292'
+            signAlg 'SHA256withECDSA'
+            profile file('F:/key/ceshiDebug.p7b')
+            certpath file('F:/key/panel.cer')
+        }
+    }
     compileSdkVersion 4
     defaultConfig {
         compatibleSdkVersion 4
     }
-    
 }
 
 dependencies {

@@ -30,14 +30,11 @@
             ohos:height="match_content"
             ohos:width="match_parent"
             ohos:orientation="vertical"
-            ohos:weight="1"
-            app:auto_reset_area="$id:empty_view"
-            app:auto_reset_enable="true"
             app:edit_view="$id:textfield_input">
 
             <ListContainer
                 ohos:id="$+id:recycler_view"
-                ohos:height="match_content"
+                ohos:height="match_parent"
                 ohos:width="match_parent"
                 ohos:bottom_margin="50vp"/>
             <!-- 内容区域 -->
@@ -48,7 +45,7 @@
                 ohos:id="$+id:input_layout"
                 ohos:height="match_content"
                 ohos:width="match_parent"
-                ohos:align_parent_bottom="true"
+                ohos:layout_alignment="bottom"
                 ohos:orientation="horizontal"
                 >
 
@@ -132,7 +129,6 @@
                 app:panel_name="emotion_btn"
                 app:panel_trigger="$id:emotion_btn"
                 />
-
         </com.example.library.view.panel.PanelContainer>
 
     </com.example.library.view.PanelSwitchLayout>

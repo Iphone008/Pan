@@ -27,7 +27,7 @@
         <!-- 显示上半部分 的View-->
         <com.example.library.view.content.DirectionalContentContainer
             ohos:id="$+id:content_view"
-            ohos:height="match_content"
+            ohos:height="match_parent"
             ohos:width="match_parent"
             ohos:orientation="vertical"
             ohos:weight="1"
@@ -37,7 +37,8 @@
 
             <ListContainer
                 ohos:id="$+id:recycler_view"
-                ohos:height="match_content"
+                ohos:height="0vp"
+                ohos:weight="1"
                 ohos:width="match_parent"
                 ohos:bottom_margin="50vp"/>
             <!-- 内容区域 -->
@@ -50,6 +51,7 @@
                 ohos:width="match_parent"
                 ohos:align_parent_bottom="true"
                 ohos:orientation="horizontal"
+                ohos:layout_alignment="bottom"
                 >
 
                 <Image

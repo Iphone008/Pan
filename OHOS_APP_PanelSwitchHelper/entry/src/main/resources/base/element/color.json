@@ -101,6 +101,10 @@
       "value": "#5FFFFFFF"
     },
     {
+      "name": "trans_parent",
+      "value": "#00000000"
+    },
+    {
       "name": "blue_bright",
       "value": "#ff00ddff"
     }

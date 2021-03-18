@@ -182,7 +182,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
     }
     @Override
     public void assertComponent() throws Exception {
-        HiLog.debug(LABEL,"获取的当前页面为 getChildCount" +getChildCount());
+       System.out.println("获取的当前页面为 getChildCount" +getChildCount());
         if (getChildCount() != 2) {
             throw new RuntimeException("PanelSwitchLayout -- PanelSwitchLayout should has two children,the first is ContentContainer,the other is PanelContainer！");
         }
@@ -256,10 +256,11 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
          * save panel that you want to use these to checkout
          */
         mPanelSparseArray = panelContainer.panelComponentMap;
+        System.out.println("mPanelSparseArray 子类数量  "+mPanelSparseArray.size());
         for (IPanelComponent iPanelComponent:mPanelSparseArray.values()){
             Component keyView=contentContainer.findTriggerView(iPanelComponent.getBindingTriggerViewId());
-
-            keyView.setClickedListener(new ClickedListener() {
+                System.out.println("keyView is  null "+(keyView==null));
+                keyView.setClickedListener(new ClickedListener() {
                 boolean Keyboard=true;
                 @Override
                 public void onClick(Component component) {
@@ -272,10 +273,7 @@ public class PanelSwitchLayout extends DirectionalLayout implements ComponentAss
                     notifyViewClick(component);
 
                     int targetId = panelContainer.getPanelId(iPanelComponent);
-//                    System.out.println("进入方法  点击时间的判断条件panelId : "+panelId+", targetId:"+targetId);
-//                    System.out.println("进入方法  点击时间的判断条件 iPanelComponent.isTriggerViewCanToggle(): "+iPanelComponent.isTriggerViewCanToggle());
-//                    System.out.println("进入方法  点击时间的判断条件iPanelComponent.isShowing() : "+iPanelComponent.isShowing());
-                    //&& iPanelComponent.isTriggerViewCanToggle() && iPanelComponent.isShowing()
+
                     if (panelId == targetId&&iPanelComponent.isShowing() ) {
                         boolean Keyboard=true;
                         System.out.println("进入方法 ---------checkoutKeyboard（）1----");

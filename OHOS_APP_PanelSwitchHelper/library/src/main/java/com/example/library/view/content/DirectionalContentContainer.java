@@ -1,8 +1,10 @@
 package com.example.library.view.content;
 
-import com.example.library.interfaces.ContentScrollMeasurerBuilder;
 import com.example.library.interfaces.IContentScroll.ContentScrollMeasurer;
-import ohos.agp.components.*;
+import ohos.agp.components.Attr;
+import ohos.agp.components.AttrSet;
+import ohos.agp.components.Component;
+import ohos.agp.components.DirectionalLayout;
 import ohos.app.Context;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
@@ -10,7 +12,7 @@ import ohos.multimodalinput.event.TouchEvent;
 
 import java.util.List;
 
-public class DirectionalContentContainer extends DirectionalLayout implements IContentContainer {
+public class DirectionalContentContainer extends DirectionalLayout implements IContentContainer, Component.TouchEventListener {
     static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0xD001500, "MY_TAG_LinearContentContainer");
     private int editTextId = 0;
     private int autoResetId = 0;
@@ -23,39 +25,27 @@ public class DirectionalContentContainer extends DirectionalLayout implements IC
 
     public DirectionalContentContainer(Context context, AttrSet attrSet) {
         super(context, attrSet, null);
-        initView(context, attrSet, "");
+        initView(context, attrSet);
     }
 
     public DirectionalContentContainer(Context context, AttrSet attrSet, String styleName) {
         super(context, attrSet, styleName);
-        initView(context, attrSet, styleName);
+        initView(context, attrSet);
     }
 
-
-    private void initView(Context context, AttrSet attrSet, String styleName) {
-        editTextId = attrSet.getAttr("edit_view").get().getIntegerValue();
-        autoResetId = attrSet.getAttr("auto_reset_area").get().getIntegerValue();
-        autoResetByOnTouch = attrSet.getAttr("auto_reset_enable").get().getBoolValue();
+    private void initView(Context context, AttrSet attrSet) {
+        editTextId = attrSet.getAttr("edit_view").map(Attr::getIntegerValue).orElse(-1);
+        autoResetId = attrSet.getAttr("auto_reset_area").map(Attr::getIntegerValue).orElse(-1);
+        autoResetByOnTouch = attrSet.getAttr("auto_reset_enable").map(Attr::getBoolValue).orElse(true);
         setOrientation(VERTICAL);
-        contentContainer = new ContentContainerImpl(this, autoResetByOnTouch, editTextId, autoResetId);
-        new TouchEventListener() {
-            @Override
-            public boolean onTouchEvent(Component component, TouchEvent touchEvent) {
-                HiLog.info(LABEL,"initView  LinearContainer  is run");
-                return true;
-            }
-        };
+
     }
     //---------鸿蒙中没有
 
     //添加view  onFinishFlate
     public void onFinishInflate() {
-        contentContainer = new ContentContainerImpl(this, autoResetByOnTouch, editTextId, autoResetId);
-        TextField editText = getInputActionImpl().getFullScreenPixelInputView();
-        if (editText != null) {
-            ComponentContainer.LayoutConfig config = new ComponentContainer.LayoutConfig(1, 1);
-//            addComponent(editText, 0, config);
-        }
+        //autoResetId
+        contentContainer = new ContentContainerImpl(this, autoResetByOnTouch, editTextId, 0);
     }
 
 
@@ -85,5 +75,11 @@ public class DirectionalContentContainer extends DirectionalLayout implements IC
     @Override
     public IResetAction getResetActionImpl() {
         return contentContainer.getResetActionImpl();
+    }
+
+    @Override
+    public boolean onTouchEvent(Component component, TouchEvent touchEvent) {
+        boolean hookResult = getResetActionImpl().hookOnTouchEvent(touchEvent);
+        return hookResult;
     }
 }
