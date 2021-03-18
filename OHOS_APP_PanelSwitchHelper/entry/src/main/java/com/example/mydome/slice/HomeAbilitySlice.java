@@ -116,7 +116,7 @@ public class HomeAbilitySlice extends AbilitySlice {
                         titles.addAll(Arrays.asList(new String[]{fragment_1,fragment_2,fragment_3,fragment_4}));
                         break;
                     case window_title:
-                        titles.addAll(Arrays.asList(new String[] {window_1,window_2,window_3}));
+                        titles.addAll(Arrays.asList(new String[] {window_2,window_3}));
                         break;
                     case scene_title:
                         titles.addAll(Arrays.asList(new String[]{scene_1,scene_2,scene_3,scene_4,scene_5}));

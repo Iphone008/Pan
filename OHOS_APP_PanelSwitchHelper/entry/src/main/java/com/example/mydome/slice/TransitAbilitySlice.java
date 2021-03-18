@@ -3,10 +3,16 @@ package com.example.mydome.slice;
 import com.example.mydome.*;
 import com.example.mydome.anno.ApiContentType;
 import com.example.mydome.anno.ApiResetType;
+import com.example.mydome.anno.ChatPageType;
+import com.example.mydome.scene.adapter.ChatProvider;
+import com.example.mydome.util.DisplayUtils;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.aafwk.content.Operation;
 import ohos.agp.components.*;
+import ohos.agp.utils.LayoutAlignment;
+import ohos.agp.window.dialog.CommonDialog;
+import ohos.agp.window.dialog.PopupDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +67,14 @@ public class TransitAbilitySlice extends AbilitySlice {
     final String api_reset_5 = "关闭点击内容容器收起面板";
     ListContainer list;
     List<String> childStrings = new ArrayList<>();
-
+    Component rootView;
     @Override
     public void onStart(Intent intent) {
         super.onStart(intent);
         super.setUIContent(ResourceTable.Layout_ability_transit);
         childStrings.addAll(intent.getStringArrayListParam("titles"));
         list = (ListContainer) findComponentById(ResourceTable.Id_transit_list);
+        rootView=findComponentById(ResourceTable.Id_root);
         list.setItemProvider(new BaseItemProvider() {
             @Override
             public int getCount() {
@@ -95,70 +102,127 @@ public class TransitAbilitySlice extends AbilitySlice {
         list.setItemClickedListener(new ListContainer.ItemClickedListener() {
             @Override
             public void onItemClicked(ListContainer listContainer, Component component, int i, long l) {
-                switch (childStrings.get(i)) {
-                    case activity_1: {
+                Intent secondIntent = new Intent();
+                // 指定待启动FA的bundleName和abilityName
+                Operation operation = new Intent.OperationBuilder()
+                        .withDeviceId("")
+                        .withBundleName("com.example.mydome")
+                        .withAbilityName("com.example.mydome.ChatAbility")
+                        .build();
+                Intent secondIntent2 = new Intent();
+                // 指定待启动FA的bundleName和abilityName
+                Operation operation2 = new Intent.OperationBuilder()
+                        .withDeviceId("")
+                        .withBundleName("com.example.mydome")
+                        .withAbilityName("com.example.mydome.ChatFractionAbility")
+                        .build();
+                switch (childStrings.get(i)){
+                    case activity_1:{
+
+                        secondIntent.setParam("type", ChatPageType.DEFAULT);
+                        secondIntent.setOperation(operation);
+                        startAbility(secondIntent);
 //                        ChatActivity.start(MainActivity.this, ChatPageType.DEFAULT);
                         break;
                     }
-                    case activity_2: {
+                    case activity_2:{
+                        secondIntent.setParam("type", ChatPageType.TITLE_BAR);
+                        secondIntent.setOperation(operation);
+                        startAbility(secondIntent);
 //                        ChatActivity.start(MainActivity.this, ChatPageType.TITLE_BAR);
                         break;
                     }
-                    case activity_3: {
+                    case activity_3:{
+                        secondIntent.setParam("type", ChatPageType.CUS_TITLE_BAR);
+                        secondIntent.setOperation(operation);
+                        startAbility(secondIntent);
 //                        ChatActivity.start(MainActivity.this, ChatPageType.CUS_TITLE_BAR);
                         break;
                     }
-                    case activity_4: {
+                    case activity_4:{
+                        secondIntent.setParam("type", ChatPageType.COLOR_STATUS_BAR);
+                        secondIntent.setOperation(operation);
+                        startAbility(secondIntent);
 //                        ChatActivity.start(MainActivity.this, ChatPageType.COLOR_STATUS_BAR);
                         break;
                     }
-                    case activity_5: {
+                    case activity_5:{
+                        secondIntent.setParam("type", ChatPageType.TRANSPARENT_STATUS_BAR);
+                        secondIntent.setOperation(operation);
+                        startAbility(secondIntent);
 //                        ChatActivity.start(MainActivity.this, ChatPageType.TRANSPARENT_STATUS_BAR);
                         break;
                     }
-                    case activity_6: {
+                    case activity_6:{
+                        secondIntent.setParam("type", ChatPageType.TRANSPARENT_STATUS_BAR_DRAW_UNDER);
+                        secondIntent.setOperation(operation);
+                        startAbility(secondIntent);
 //                        ChatActivity.start(MainActivity.this, ChatPageType.TRANSPARENT_STATUS_BAR_DRAW_UNDER);
                         break;
                     }
 
-                    case fragment_1: {
+                    case fragment_1:{
+                        secondIntent2.setParam("type",ChatPageType.DEFAULT);
+                        secondIntent2.setOperation(operation2);
+                        startAbility(secondIntent2);
 //                        ChatFragmentActivity.startFragment(MainActivity.this, ChatPageType.DEFAULT);
                         break;
                     }
-                    case fragment_2: {
+                    case fragment_2:{
+                        secondIntent2.setParam("type",ChatPageType.TITLE_BAR);
+                        secondIntent2.setOperation(operation2);
+                        startAbility(secondIntent2);
 //                        ChatFragmentActivity.startFragment(MainActivity.this, ChatPageType.TITLE_BAR);
                         break;
                     }
-                    case fragment_3: {
+                    case fragment_3:{
+                        secondIntent2.setParam("type",ChatPageType.COLOR_STATUS_BAR);
+                        secondIntent2.setOperation(operation2);
+                        startAbility(secondIntent2);
 //                        ChatFragmentActivity.startFragment(MainActivity.this, ChatPageType.COLOR_STATUS_BAR);
                         break;
                     }
-                    case fragment_4: {
+                    case fragment_4:{
+                        secondIntent2.setParam("type",ChatPageType.TRANSPARENT_STATUS_BAR);
+                        secondIntent2.setOperation(operation2);
+                        startAbility(secondIntent2);
 //                        ChatFragmentActivity.startFragment(MainActivity.this, ChatPageType.TRANSPARENT_STATUS_BAR);
                         break;
                     }
 
-                    case window_1: {
-//                        DialogFragment dialogFragment = new ChatDialogFragment();
-//                        dialogFragment.showNow(getSupportFragmentManager(), "dialogFragment");
-                        break;
-                    }
-                    case window_2: {
+                    case window_2:{
+                        Component view = LayoutScatter.getInstance(getContext()).parse(ResourceTable.Layout_common_chat_with_titlebar, null, false);
+                        PopupDialog b = new PopupDialog(getContext(), rootView, DisplayUtils.getDisplayWidthInPx(getContext()),DisplayUtils.getScreenRealHeight(getContext()));
+                        b.setCustomComponent(view);
+                        //改造 List
+
+                        ListContainer dialoglist = (ListContainer) view.findComponentById(ResourceTable.Id_list_dialog);
+
+
+                        dialoglist.setItemProvider(new ChatProvider(getAbility(), 28));
+                        b.show();
 //                        PopupWindow popupWindow = new ChatPopupWindow(MainActivity.this);
 //                        popupWindow.showAtLocation(mBinding.getRoot(), Gravity.NO_GRAVITY, 0, 0);
                         break;
                     }
-                    case window_3: {
+                    case window_3:{
+                        CommonDialog a = new CommonDialog(getContext());
+                        Component component1 = LayoutScatter.getInstance(getContext()).parse(ResourceTable.Layout_common_chat_with_titlebar, null, false);
+                        a.setContentCustomComponent(component1);
+                        a.setAlignment(LayoutAlignment.BOTTOM);
+                        a.show();
+                        ListContainer dialoglist = (ListContainer) component1.findComponentById(ResourceTable.Id_list_dialog);
+                        dialoglist.setItemProvider(new ChatProvider(getAbility(), 30));
 //                        Dialog dialog = new ChatDialog(MainActivity.this);
 //                        dialog.show();
                         break;
                     }
 
-                    case scene_1: {
+                    case scene_1:{
 //                        startActivity(new Intent(MainActivity.this, BiliBiliSampleActivity.class));
                         break;
                     }
-                    case scene_2: {
+                    case scene_2:{
 //                        startActivity(new Intent(MainActivity.this, FeedDialogActivity.class));
                         break;
                     }
@@ -166,15 +230,15 @@ public class TransitAbilitySlice extends AbilitySlice {
 //                        startActivity(new Intent(MainActivity.this, FeedActivity.class));
 //                        break;
 //                    }
-                    case scene_3: {
+                    case scene_3:{
 //                        startActivity(new Intent(MainActivity.this, PcHuyaLiveActivity.class));
                         break;
                     }
-                    case scene_4: {
+                    case scene_4:{
 //                        startActivity(new Intent(MainActivity.this, PhoneDouyinLiveActivity.class));
                         break;
                     }
-                    case scene_5: {
+                    case scene_5:{
 //                        startActivity(new Intent(MainActivity.this, ChatSuperActivity.class));
                         break;
                     }
@@ -182,12 +246,12 @@ public class TransitAbilitySlice extends AbilitySlice {
                     case api_cus_panel: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Linear);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation3 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(CusPanelAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation3);
                         startAbility(intent);
                         break;
                     }
@@ -195,12 +259,12 @@ public class TransitAbilitySlice extends AbilitySlice {
                     case api_cus_panel_height: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Linear);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation4 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(DefaultHeightPanelAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation4);
                         startAbility(intent);
                         break;
                     }
@@ -208,60 +272,60 @@ public class TransitAbilitySlice extends AbilitySlice {
                     case api_define_content_container_scroll: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Linear);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation5 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(ChatCusContentScrollAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation5);
                         startAbility(intent);
                         break;
                     }
                     case api_content_container_1: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Linear);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation6 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(ContentAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation6);
                         startAbility(intent);
                         break;
                     }
                     case api_content_container_2: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Relative);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation7 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(ContentAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation7);
                         startAbility(intent);
                         break;
                     }
                     case api_content_container_3: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.Frame);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation8 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(ContentAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation8);
                         startAbility(intent);
                         break;
                     }
                     case api_content_container_4: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiContentType.CUS);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation9 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(ContentAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation9);
                         startAbility(intent);
                         break;
                     }
@@ -269,60 +333,60 @@ public class TransitAbilitySlice extends AbilitySlice {
                     case api_reset_1: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiResetType.ENABLE);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation10 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(ResetAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation10);
                         startAbility(intent);
                         break;
                     }
                     case api_reset_2: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiResetType.ENABLE_EmptyView);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation11 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(ResetAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation11);
                         startAbility(intent);
                         break;
                     }
                     case api_reset_3: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiResetType.ENABLE_RecyclerView);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation12 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(ResetAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation12);
                         startAbility(intent);
                         break;
                     }
                     case api_reset_4: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiResetType.ENABLE_HookActionUpRecyclerview);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation13 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(ResetAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation13);
                         startAbility(intent);
                         break;
                     }
                     case api_reset_5: {
                         Intent intent = new Intent();
                         intent.setParam(Constants.KEY_CONTENT_TYPE, ApiResetType.DISABLE);
-                        Operation operation = new Intent.OperationBuilder()
+                        Operation operation15 = new Intent.OperationBuilder()
                                 .withDeviceId("")
                                 .withBundleName(getBundleName())
                                 .withAbilityName(ResetAbility.class.getName())
                                 .build();
-                        intent.setOperation(operation);
+                        intent.setOperation(operation15);
                         startAbility(intent);
                         break;
                     }

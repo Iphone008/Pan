@@ -1,12 +1,10 @@
 package com.example.library.view.content;
 
-import com.example.library.interfaces.ContentScrollMeasurerBuilder;
 import com.example.library.interfaces.IContentScroll.ContentScrollMeasurer;
-import ohos.aafwk.ability.delegation.IAbilityDelegator;
+import ohos.agp.components.Attr;
 import ohos.agp.components.AttrSet;
 import ohos.agp.components.Component;
 import ohos.agp.components.StackLayout;
-import ohos.agp.components.TextField;
 import ohos.app.Context;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
@@ -15,7 +13,7 @@ import ohos.multimodalinput.event.TouchEvent;
 import java.util.List;
 
 
-public class StackContentContainer extends StackLayout implements IContentContainer {
+public class StackContentContainer extends StackLayout implements IContentContainer, Component.TouchEventListener {
     private int editTextId = 0;
     private int autoResetId = 0;
     private boolean autoResetByOnTouch=true;
@@ -38,22 +36,15 @@ public class StackContentContainer extends StackLayout implements IContentContai
 
     private void initView(Context context, AttrSet attrSet,String defStyleRes){
 
-        editTextId=attrSet.getAttr("edit_text").get().getIntegerValue();
-        autoResetId=attrSet.getAttr("auto_reset_area").get().getIntegerValue();
-        autoResetByOnTouch=attrSet.getAttr("auto_reset_enable").get().getBoolValue();
-        new TouchEventListener() {
-            @Override
-            public boolean onTouchEvent(Component component, TouchEvent touchEvent) {
-                boolean onTouchTrue =component.isTouchFocusable();
-                boolean hookResult = getResetActionImpl().hookDispatchTouchEvent(touchEvent, onTouchTrue);
-                return hookResult || onTouchTrue;
-            }
-        };
+        editTextId=attrSet.getAttr("edit_view").map(Attr::getIntegerValue).orElse(-1);
+        System.out.println("获取的当前编辑框 ID "+editTextId);
+        autoResetId=attrSet.getAttr("auto_reset_area").map(Attr::getIntegerValue).orElse(-1);
+        autoResetByOnTouch=attrSet.getAttr("auto_reset_enable").map(Attr::getBoolValue).orElse(true);
     }
 
     public void onFinishFlate(){
         contentContainer = new ContentContainerImpl(this,autoResetByOnTouch, editTextId, autoResetId);
-        TextField editText = getInputActionImpl().getFullScreenPixelInputView();
+//        TextField editText = getInputActionImpl().getFullScreenPixelInputView();
 //        addComponent(editText,0,new LayoutConfig(1,1));
     }
 
@@ -84,5 +75,13 @@ public class StackContentContainer extends StackLayout implements IContentContai
     @Override
     public IResetAction getResetActionImpl() {
         return contentContainer.getResetActionImpl();
+    }
+
+    @Override
+    public boolean onTouchEvent(Component component, TouchEvent touchEvent) {
+//        boolean onTouchTrue =component.isTouchFocusable();  ||onTouchTrue
+        boolean hookResult = getResetActionImpl().hookOnTouchEvent(touchEvent);
+        System.out.println("点击事件 :  "+hookResult);
+        return hookResult;
     }
 }

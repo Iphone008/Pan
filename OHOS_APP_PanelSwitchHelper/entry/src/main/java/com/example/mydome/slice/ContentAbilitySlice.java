@@ -75,6 +75,7 @@ public class ContentAbilitySlice extends AbilitySlice {
         mWindow = this.getWindow();
         mWindow.setInputPanelDisplayType(WindowManager.LayoutConfig.INPUT_ADJUST_PAN);
         mPanelSwitchLayout = (PanelSwitchLayout) findComponentById(ResourceTable.Id_panel_switch_layout);
+        System.out.println("判断当前是否获取到View ：mPanelSwitchLayout "+(mPanelSwitchLayout==null));
         mTitleText = (Text) findComponentById(ResourceTable.Id_titleText);
         addbt = (Image) findComponentById(ResourceTable.Id_add_btn);
         emotion_btn = (Image) findComponentById(ResourceTable.Id_emotion_btn);

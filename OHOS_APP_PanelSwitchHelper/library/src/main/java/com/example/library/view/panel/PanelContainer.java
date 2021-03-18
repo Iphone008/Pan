@@ -41,13 +41,13 @@ public class PanelContainer extends DirectionalLayout implements ComponentAssert
 
     @Override
     public void assertComponent() throws Exception {
-        HiLog.info(LABEL,"当前view的 子类有  "+getChildCount());
+        System.out.println("当前view的 子类有  "+getChildCount());
         for (int i = 0; i < getChildCount(); i++) {
             IPanelComponent panel = null;
-            getComponentAt(i);
             HiLog.info(LABEL, "assertComponent  id  " + getComponentAt(i).getId());
             if (getComponentAt(i) instanceof IPanelComponent) {
                 panel = (IPanelComponent) getComponentAt(i);
+                System.out.println("遍历当前View的序号是  "+i);
             } else {
                 throw new RuntimeException("PanelContainer -- PanelContainer's child should be IPanelView");
             }
